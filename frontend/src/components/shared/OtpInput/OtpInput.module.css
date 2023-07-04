@@ -1,0 +1,22 @@
+.otpGroup {
+  display: flex;
+  width: 100%;
+  column-gap: 0.5rem;
+}
+
+.otpInput {
+  width: 100%;
+  height: 3rem;
+  border: 1px solid #ccc;
+  color: var(--secondaryTextColor);
+  border-radius: 5px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  line-height: 1;
+  background-color: var(--secondaryb);
+}
+
+.otpInput:focus {
+  outline-color: var(--successColor);
+}

@@ -1,0 +1,15 @@
+.reSendOtp {
+  font-size: 0.8rem;
+  color: var(--secondaryTextColor);
+}
+
+.reSendOtp span {
+  color: var(--indigoColor);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.reSendOtp span:hover {
+  color: var(--pinkColor);
+}

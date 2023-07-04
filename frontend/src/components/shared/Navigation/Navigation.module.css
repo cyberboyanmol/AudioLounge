@@ -1,0 +1,104 @@
+.navbar {
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brandLogo {
+  display: flex;
+  align-items: center;
+  gap: 0.01rem;
+}
+.logo {
+  color: var(--pinkColor1);
+  font-weight: 700;
+  width: 2rem;
+  height: 2rem;
+}
+.brandName {
+  background: var(--linearGradient);
+  -webkit-background-clip: text;
+  font-weight: 700;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.5rem;
+}
+
+.userProfile {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  position: relative;
+}
+.userProfileLEft {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.userProfileRight {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  top: 45px;
+  padding: 5px 10px;
+  background-color: var(--secondaryBgColor);
+  right: 0px;
+  width: 200px;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+.myProfile,
+.logoutBtn {
+  cursor: pointer;
+  padding: 5px 10px;
+  color: white;
+  width: 100%;
+  font-size: 1.1rem;
+}
+.myProfile:hover,
+.logoutBtn:hover {
+  background-color: var(--primaryBgColor);
+}
+
+.Avatar {
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #0077ff;
+}
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--dangerColor);
+}
+
+.h3 {
+  display: none;
+}
+
+/* @media screen and (min-width: 425px) {
+  html {
+    font-size: calc(16px + 0.2vw);
+  }
+}*/
+
+.getStarted {
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  background: var(--linearGradient);
+  font-size: 1rem;
+  font-weight: normal;
+  color: var(--primaryTextColor);
+  cursor: pointer;
+  box-shadow: var(--secondaryBgColor) 0px 4px 12px;
+}
+@media screen and (min-width: 768px) {
+  .h3 {
+    display: flex;
+  }
+}

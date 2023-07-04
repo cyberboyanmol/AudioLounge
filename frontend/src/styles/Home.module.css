@@ -1,0 +1,14 @@
+.text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #c4c5c5;
+  text-align: center;
+}
+
+.signinWrapper {
+
+}
+
+.hasInvite {
+  color: #0077ff;
+}
