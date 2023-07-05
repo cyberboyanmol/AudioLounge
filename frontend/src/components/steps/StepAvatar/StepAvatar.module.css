@@ -14,6 +14,7 @@
   width: 100%;
   border-radius: 50%;
   height: 100%;
+  object-fit: cover;
 }
 
 .user_avatar_input {

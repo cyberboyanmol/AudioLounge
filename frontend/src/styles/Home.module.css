@@ -6,9 +6,18 @@
 }
 
 .signinWrapper {
-
 }
 
 .hasInvite {
   color: #0077ff;
+}
+
+.actionButtonWrap {
+  width: 100%;
+}
+
+@media screen and (min-width: 500px) {
+  .actionButtonWrap {
+    width: 70%;
+  }
 }

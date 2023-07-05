@@ -1,11 +1,19 @@
 .input {
+  position: relative;
   background: #323232;
   border: none;
-  padding: 10px 20px;
-  width: 200px;
+  padding: 0.6rem 2rem 0.6rem 3rem;
+  width: 100%;
   color: #fff;
   font-size: 18px;
   border-radius: 10px;
   outline: none;
+}
 
+.input::placeholder {
+  color: var(--secondaryTextColor);
+}
+.customInput {
+  width: 100%;
+  position: relative;
 }

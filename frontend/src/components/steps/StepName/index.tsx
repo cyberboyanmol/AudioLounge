@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styles from "./StepName.module.css";
 import { StepProps } from "../StepPhoneEmail";
 import { Button, Card, TextInput } from "@/components/shared";
-import { AiOutlineArrowRight } from "react-icons/ai";
+import { AiOutlineArrowRight, AiOutlineUser } from "react-icons/ai";
 
 const StepName: React.FC<StepProps> = ({ onNext }) => {
   const [fullname, setFullname] = useState("");
@@ -30,6 +30,7 @@ const StepName: React.FC<StepProps> = ({ onNext }) => {
     <>
       <Card title="What’s your full name?" icon="goggle-emoji">
         <TextInput
+          icon={<AiOutlineUser className={styles.InputIcon} />}
           value={fullname}
           placeholder="ex: John wick"
           onChange={(e) => setFullname(e.target.value)}

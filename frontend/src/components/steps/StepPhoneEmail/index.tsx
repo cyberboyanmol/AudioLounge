@@ -46,7 +46,7 @@ const StepPhoneEmail: React.FC<StepProps> = ({ onNext }) => {
       exit={{ opacity: 0, scale: 0.8 }}
       className={`cardWrapper ${styles.cardWrapperStep}`}
     >
-      <div className={`${styles.StepPhoneEmail}`}>
+      {/* <div className={`${styles.StepPhoneEmail}`}>
         <div className={styles.buttonWrap}>
           <div className={styles.phoneAndEmail}>
             {buttonArray.map((btn, index) => {
@@ -70,8 +70,8 @@ const StepPhoneEmail: React.FC<StepProps> = ({ onNext }) => {
             })}
           </div>
         </div>
-      </div>
-      <Component onNext={onNext} />
+      </div> */}
+      <Email onNext={onNext} />
     </motion.div>
   );
 };

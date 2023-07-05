@@ -2,10 +2,11 @@ import Head from "next/head";
 import Image from "next/image";
 import { Nunito_Sans } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-
 import { motion } from "framer-motion";
-const Nunito = Nunito_Sans({ subsets: ["latin"] });
 import { AiOutlineArrowRight } from "react-icons/ai";
+import { FcGoogle } from "react-icons/fc";
+import { SiMinutemailer } from "react-icons/si";
+
 import { useRouter } from "next/router";
 import { Button, Card } from "@/components";
 export default function Home() {
@@ -15,14 +16,25 @@ export default function Home() {
   };
 
   const ButtonStyle = {
-    fontSize: "1.1rem",
+    fontSize: "1.4rem",
     fontWeight: "bold",
   };
 
   const externalStyle = {
     background: "var(--linearGradient)",
     color: "var(--primaryTextColor)",
+    width: "100%",
+    justifyContent: "center",
+    gap: ".6rem",
   };
+  const externalStyleGoogle = {
+    width: "100%",
+    gap: ".6rem",
+    justifyContent: "center",
+    flexDirection: "row-reverse",
+  };
+  const SignInWithGoogle = () => {};
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
@@ -38,12 +50,20 @@ export default function Home() {
           walks of life can connect, converse, and share their thoughts in
           real-time, fostering meaningful discussions and knowledge-sharing.
         </p>
-        <div>
+        <div className={styles.actionButtonWrap}>
           <Button
             externalStyle={externalStyle}
             onClick={startRegister}
-            text="Get Started"
-            icon={<AiOutlineArrowRight style={ButtonStyle} />}
+            text="Sign In with Email"
+            icon={<SiMinutemailer style={ButtonStyle} />}
+          />
+        </div>
+        <div className={styles.actionButtonWrap}>
+          <Button
+            externalStyle={externalStyleGoogle}
+            onClick={SignInWithGoogle}
+            text="Sign In with Google"
+            icon={<FcGoogle style={ButtonStyle} />}
           />
         </div>
         {/* <div className={styles.signinWrapper}>

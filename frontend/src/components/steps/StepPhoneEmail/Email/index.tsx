@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { StepPhoneEmailProps } from "..";
+import { StepProps } from "..";
 import { Button, Card, TextInput } from "@/components/shared";
 import styles from "../stepPhoneEmail.module.css";
 import { AiOutlineArrowRight } from "react-icons/ai";
-const Email: React.FC<StepPhoneEmailProps> = ({ onNext }) => {
+import { HiOutlineMail } from "react-icons/hi";
+const Email: React.FC<StepProps> = ({ onNext }) => {
   const [email, setEmail] = useState("");
   const ButtonStyle = {
     fontSize: "1.1rem",
@@ -13,13 +14,16 @@ const Email: React.FC<StepPhoneEmailProps> = ({ onNext }) => {
   const externalStyle = {
     background: "var(--linearGradient)",
     color: "var(--primaryTextColor)",
+
     // paddingRight: "2.5rem",
     // paddingLeft: "2.5rem",
   };
 
+
   return (
     <Card title="Enter Your email id " icon="email-emoji">
       <TextInput
+        icon={<HiOutlineMail className={styles.InputIcon} />}
         value={email}
         type="email"
         onChange={(e) => setEmail(e.target.value)}

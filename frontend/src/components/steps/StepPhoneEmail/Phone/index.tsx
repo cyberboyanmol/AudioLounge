@@ -4,6 +4,7 @@ import { Button, Card, TextInput } from "@/components/shared";
 import styles from "../stepPhoneEmail.module.css";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useRouter } from "next/router";
+import { HiOutlineMail } from "react-icons/hi";
 
 const Phone: React.FC<StepProps> = ({ onNext }) => {
   const [phone, setPhone] = useState("");
@@ -39,6 +40,7 @@ const Phone: React.FC<StepProps> = ({ onNext }) => {
   return (
     <Card title="Enter Your phone number " icon="phone">
       <TextInput
+        icon={<HiOutlineMail className={styles.InputIcon} />}
         value={phone}
         type="tel"
         pattern="[0-9]{12}"

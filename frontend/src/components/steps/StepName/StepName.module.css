@@ -4,3 +4,12 @@
   width: 90%;
   margin: 0 auto;
 }
+
+.InputIcon {
+  position: absolute;
+  z-index: 10;
+  top: 4px;
+  left: 5px;
+  color: var(--primaryTextColor);
+  font-size: 1.9rem;
+}
