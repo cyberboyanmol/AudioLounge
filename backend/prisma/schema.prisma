@@ -5,10 +5,50 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// datasource db {
-//   provider = "postgresql"
-//   url      = env("DATABASE_URL")
-// }
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
 
+model User {
+  userId          String          @id @unique @default(uuid())
+  email           String
+  name            String
+  avatar          String?
+  refresh_token   String
+  activated       Boolean         @default(false)
+  updated_At      DateTime        @updatedAt
+  created_At      DateTime        @default(now())
+  registeredRoom  EventRoom[]     @relation("UserInRoom")
+  roomcreatedByme EventRoom[]
+  SpeakerInRoom   SpeakerInRoom[]
+}
 
+model EventRoom {
+  eventId            String          @id @unique @default(uuid())
+  topic              String
+  description        String?
+  roomType           RoomType        @default(SOCIAL)
+  start_timing       DateTime
+  created_At         DateTime        @default(now())
+  updated_At         DateTime        @updatedAt
+  creatorId          String?
+  creator            User?           @relation(fields: [creatorId], references: [userId])
+  participatedInRoom User[]          @relation("UserInRoom")
+  SpeakerInRoom      SpeakerInRoom[]
+}
 
+model SpeakerInRoom {
+  speaker     User      @relation(fields: [speakerId], references: [userId])
+  speakerId   String
+  eventroom   EventRoom @relation(fields: [eventroomId], references: [eventId])
+  eventroomId String
+
+  @@id([speakerId, eventroomId])
+}
+
+enum RoomType {
+  SOCIAL
+  PUBLIC
+  PRIVATE
+}

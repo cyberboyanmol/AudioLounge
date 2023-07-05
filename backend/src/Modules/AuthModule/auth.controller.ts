@@ -1,6 +1,7 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import Api from '../../lib/Api';
 
+
 export class AuthController extends Api {
   constructor() {
     super();

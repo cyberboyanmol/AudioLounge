@@ -47,7 +47,7 @@ export class App {
     this.app.use(morgan(this.config.log.format));
     this.app.use(helmet());
     this.app.use(cors(corsOptions));
-    this.app.use(express.json({ limit: '15mb' }));
+    this.app.use(express.json({ limit: '20mb' }));
     this.app.use(express.urlencoded({ extended: true }));
   }
 
