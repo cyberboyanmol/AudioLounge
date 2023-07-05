@@ -12,7 +12,7 @@ export type ButtonProps = {
 };
 
 export type phoneEmailMapProps = {
-  [key: string]: React.FC<StepPhoneEmailProps>;
+  [key: string]: React.FC<StepProps>;
 };
 
 const phoneEmailMap: phoneEmailMapProps = {
@@ -20,11 +20,11 @@ const phoneEmailMap: phoneEmailMapProps = {
   email: Email,
 };
 
-export type StepPhoneEmailProps = {
+export type StepProps = {
   onNext: () => void;
 };
 
-const StepPhoneEmail: React.FC<StepPhoneEmailProps> = ({ onNext }) => {
+const StepPhoneEmail: React.FC<StepProps> = ({ onNext }) => {
   const [type, setType] = useState("phone");
   const Component = phoneEmailMap[type];
 

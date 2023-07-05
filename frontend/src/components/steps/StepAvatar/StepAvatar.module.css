@@ -1,0 +1,27 @@
+.subHeading {
+  color: var(--secondaryTextColor);
+}
+
+.user_avatar {
+  width: 8rem;
+  height: 8rem;
+  padding: 3px;
+  background: var(--linearGradient);
+  border-radius: 50%;
+}
+
+.user_img {
+  width: 100%;
+  border-radius: 50%;
+  height: 100%;
+}
+
+.user_avatar_input {
+  display: none;
+}
+
+.user_avatar_label {
+  color: var(--indigoColor);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}

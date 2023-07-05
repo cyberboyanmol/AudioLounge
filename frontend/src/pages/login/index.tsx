@@ -1,14 +1,14 @@
 import { StepPhoneEmail, Stepotp } from "@/components";
-import { StepPhoneEmailProps } from "@/components/steps/StepPhoneEmail";
+import { StepProps } from "@/components/steps/StepPhoneEmail";
 import Email from "@/components/steps/StepPhoneEmail/Email";
 import Phone from "@/components/steps/StepPhoneEmail/Phone";
 import React, { useState } from "react";
 
-export type stepsProps = {
-  [key: number]: React.FC<StepPhoneEmailProps>;
+export type loginStepsProps = {
+  [key: number]: React.FC<StepProps>;
 };
 
-const steps: stepsProps = {
+const steps: loginStepsProps = {
   1: StepPhoneEmail,
   2: Stepotp,
 };

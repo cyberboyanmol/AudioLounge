@@ -4,9 +4,11 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import styles from "./StepOtp.module.css";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
+import { useRouter } from "next/router";
 const StepOtp = () => {
   const [otp, setOtp] = useState<string>("");
   console.log(otp);
+  const router = useRouter();
   const dispatch = useDispatch();
   const onChange = (value: string) => setOtp(value);
   const ButtonStyle = {
@@ -18,7 +20,9 @@ const StepOtp = () => {
     background: "var(--linearGradient)",
     color: "var(--primaryTextColor)",
   };
-  const otpsubmitHandler = () => {};
+  const otpsubmitHandler = () => {
+    router.push("/setup");
+  };
   return (
     <div className="cardWrapper">
       <Card title="Enter the code we just texted you" icon="lock-emoji">
