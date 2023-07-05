@@ -35,7 +35,7 @@ const StepAvatar = () => {
   return (
     <>
       <Card title={`Okay, ${"Anmol Gangwar"}`} icon="monkey-emoji">
-        <p className={styles.subHeading}>How's this photo?</p>
+        <p className={styles.subHeading}>{`How's this photo?`}</p>
         <div className={styles.user_avatar}>
           <Image
             src={image}
