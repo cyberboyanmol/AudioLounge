@@ -20,7 +20,8 @@ winston.addColors(colors);
 const format = winston.format.combine(
   winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss:ms' }),
   winston.format.colorize({ all: true }),
-  winston.format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`),
+
+  winston.format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`), //very important while logging
 );
 
 const transports = [new winston.transports.Console()];

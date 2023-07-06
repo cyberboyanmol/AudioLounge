@@ -1,10 +1,9 @@
 import nodemailer from 'nodemailer';
-import fs from 'fs';
 import path from 'path';
 import ejs from 'ejs';
 import Mail from 'nodemailer/lib/mailer';
-import { logger } from 'lib/logger';
-import { sendMail } from 'interfaces/sendmail.interface';
+import { logger } from './logger';
+import { sendMail } from '../interfaces/sendmail.interface';
 export class MailService {
   private transporter;
   constructor() {

@@ -12,7 +12,7 @@ datasource db {
 
 model User {
   userId          String          @id @unique @default(uuid())
-  email           String
+  email           String          @unique
   name            String?
   avatar          String?
   refresh_token   String
@@ -23,7 +23,6 @@ model User {
   registeredRoom  EventRoom[]     @relation("UserInRoom")
   roomcreatedByme EventRoom[]
   SpeakerInRoom   SpeakerInRoom[]
-
 }
 
 model EventRoom {

@@ -3,7 +3,6 @@ import { getConfig } from '../config';
 import { logger } from './logger';
 import { globalConstants } from './constants';
 import { CustomResponse } from '../interfaces/response.interface';
-import { AuthDto } from 'Modules/AuthModule/dtos/auth.dto';
 
 abstract class Api {
   public send<R>(

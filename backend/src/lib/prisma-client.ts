@@ -6,18 +6,8 @@ interface CustomNodeJSGlobal extends Global {
 
 declare const global: CustomNodeJSGlobal;
 
-const prisma =
-  global.prisma ||
-  new PrismaClient({
-    datasources: {
-      db: {
-        url: process.env.DATABASE_URL,
-      },
-    },
-  });
+const prisma = global.prisma || new PrismaClient();
 
 if (getConfig().env === 'development') global.prisma = prisma;
-
-
 
 export default prisma;

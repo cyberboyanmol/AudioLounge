@@ -7,7 +7,9 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development tsx watch ./src/server.ts ",
     "start": "yarn run build && cross-env NODE_ENV=production node dist/server.js",
-    "build": "tsc",
+    "build": "yarn clean && sleep 1 &&  tsc && yarn copy-templates ",
+    "clean": "rimraf dist/",
+    "copy-templates": "copyfiles -u 1 src/templates/**/*.ejs  dist/ ",
     "format": "prettier --write \"./**/*.{js,ts,json}\"",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
@@ -49,8 +51,10 @@
     "@types/nodemailer": "^6.4.8",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
     "@typescript-eslint/parser": "^5.61.0",
+    "copyfiles": "^2.4.1",
     "eslint": "^8.44.0",
     "prettier": "^2.8.8",
+    "rimraf": "^5.0.1",
     "ts-node": "^10.9.1",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6"
