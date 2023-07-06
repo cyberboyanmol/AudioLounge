@@ -18,4 +18,6 @@ const prisma =
 
 if (getConfig().env === 'development') global.prisma = prisma;
 
+
+
 export default prisma;

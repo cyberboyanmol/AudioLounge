@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>OTP Email</title>
+    <style>
+      /* CSS styles */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f6f6f6;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+      }
+      .title {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .otp {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2 class="title">OTP Email</h2>
+      <p>Hi <%= name %>,</p>
+      <p>Your OTP for verification is: <span class="otp"><%= otp %></span></p>
+      <p>Please use this OTP to complete your verification process.</p>
+    </div>
+  </body>
+</html>

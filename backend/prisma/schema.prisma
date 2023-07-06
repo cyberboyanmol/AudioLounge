@@ -13,15 +13,17 @@ datasource db {
 model User {
   userId          String          @id @unique @default(uuid())
   email           String
-  name            String
+  name            String?
   avatar          String?
   refresh_token   String
   activated       Boolean         @default(false)
+  provider        Provider        @default(LOCAL)
   updated_At      DateTime        @updatedAt
   created_At      DateTime        @default(now())
   registeredRoom  EventRoom[]     @relation("UserInRoom")
   roomcreatedByme EventRoom[]
   SpeakerInRoom   SpeakerInRoom[]
+
 }
 
 model EventRoom {
@@ -51,4 +53,9 @@ enum RoomType {
   SOCIAL
   PUBLIC
   PRIVATE
+}
+
+enum Provider {
+  LOCAL
+  GOOGLE
 }

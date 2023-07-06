@@ -1,5 +1,5 @@
 export interface CustomResponse<T> {
   status: string;
-  messsage: string | null;
+  message: string | null;
   data: T | null;
 }

@@ -78,6 +78,7 @@ export class App {
   public listen() {
     this.app.listen(this.port, () => {
       logger.info(`🚀 Server listening on http://${this.config.server.host}:${this.port}`);
+
     });
   }
 }

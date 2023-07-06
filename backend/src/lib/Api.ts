@@ -2,11 +2,13 @@ import { Response } from 'express';
 import { getConfig } from '../config';
 import { logger } from './logger';
 import { globalConstants } from './constants';
+import { CustomResponse } from '../interfaces/response.interface';
+import { AuthDto } from 'Modules/AuthModule/dtos/auth.dto';
 
 abstract class Api {
-  public send<T>(
-    res: Response,
-    data: T,
+  public send<R>(
+    res: Response<CustomResponse<R>>,
+    data: R,
     message = 'healthy',
     status: string = globalConstants.status.success,
     statusCode: number = globalConstants.statusCode.HttpsStatusCodeOk.code,
