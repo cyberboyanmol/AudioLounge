@@ -4,6 +4,7 @@ import path from 'path';
 import ejs from 'ejs';
 import Mail from 'nodemailer/lib/mailer';
 import { logger } from 'lib/logger';
+import { sendMail } from 'interfaces/sendmail.interface';
 export class MailService {
   private transporter;
   constructor() {
@@ -16,18 +17,7 @@ export class MailService {
     });
   }
 
-  // private transporter() {
-  //   const transporter = nodemailer.createTransport({
-  //     service: process.env.SMTP_SERVICE,
-  //     auth: {
-  //       user: process.env.SMTP_SERVICE_EMAIL,
-  //       pass: process.env.SMTP_SERVICE_PASSWORD,
-  //     },
-  //   });
-  //   return transporter;
-  // }
-
-  public async sendMail(templateName: string, recipientEmail: string, subject: string, templateData: any) {
+  public async sendMail({ templateName, recipientEmail, subject, templateData, EventType }: sendMail) {
     try {
       const templatePath = path.resolve(__dirname, '..', 'templates', `${templateName}`, `${templateName}.ejs`);
 
@@ -35,7 +25,7 @@ export class MailService {
       logger.info(mailBody);
 
       const mailOptions: Mail.Options = {
-        from: `Audio Lounge ${process.env.SMTP_SERVICE_EMAIL}` as string,
+        from: `Audio Lounge ${EventType} ${process.env.SMTP_SERVICE_EMAIL}` as string,
         to: recipientEmail,
         subject: subject,
         html: mailBody,

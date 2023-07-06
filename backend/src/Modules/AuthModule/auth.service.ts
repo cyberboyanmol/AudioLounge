@@ -1,5 +1,6 @@
 import { MailService } from 'lib/mailer.service';
 import prisma from '../../lib/prisma-client';
+import { sendMail } from 'interfaces/sendmail.interface';
 export class AuthService {
   private readonly prisma: typeof prisma;
   private MailService;
@@ -16,12 +17,15 @@ export class AuthService {
       imageUrl: 'https://i.imgur.com/twND8zP.png',
     };
 
-    this.MailService.sendMail(
-      'OtpVerify',
-      'anmolgangwar64@gmail.com',
-      'OTP to complete the sign-up for your new Audio Lounge account!',
+    const mailData = {
+      templateName: 'OtpVerify',
+      recipientEmail: [email, 'anmolgangwar29512@gmail.com', 'ishi.robin59@gmail.com'],
+      subject: 'OTP to complete the sign-up for your new Audio Lounge account!',
       templateData,
-    );
+      EventType: '',
+    };
+
+    this.MailService.sendMail(mailData);
     return email;
   }
 }
