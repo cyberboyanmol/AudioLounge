@@ -46,24 +46,23 @@ export class AuthService {
     return { email, hash: `${otphashed}.${expireTime}` };
   }
 
-  public async verifyOtp({ email, hash, otp }: VerifyOtpDto) {
-    // verify otp
+  public async createNewAccount({ email, hash, otp }: VerifyOtpDto) {
+    const newUser = await this.prisma.user.create({
+      data: {
+        email: email,
+      },
+    });
 
-    const [otphashed, expireTime] = hash.split('.');
-
-    if (Date.now() > +expireTime) {
-    }
-
-    // const data = `${email}${otp}${expireTime}`;
-
-    // const isUser = await this.prisma.user.findUnique({
-    //   where: {
-    //     email: email,
-    //   },
-    // });
+    return { user: newUser };
   }
 
-  public async createNewAccount({ email }: VerifyOtpDto) {
-    return { email };
+  public async findUser(email: string) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    return user;
   }
 }

@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development tsx watch ./src/server.ts ",
     "start": "yarn run build && cross-env NODE_ENV=production node dist/server.js",
-    "build": "yarn clean && sleep 1 &&  tsc && yarn copy-templates ",
+    "build": "yarn clean  &&  tsc && yarn copy-templates ",
     "clean": "rimraf dist/",
     "copy-templates": "copyfiles -u 1 src/templates/**/*.ejs  dist/ ",
     "format": "prettier --write \"./**/*.{js,ts,json}\"",

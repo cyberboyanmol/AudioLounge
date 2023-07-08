@@ -21,7 +21,8 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "importHelpers": true,
-    "baseUrl": "src"
+    "baseUrl": "./src",
+    "paths": {}
   },
   "include": ["src/**/*.ts", "src/**/*.json", "src/templates/**/*.ejs", ".env"],
   "exclude": ["node_modules"]

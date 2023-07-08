@@ -14,6 +14,10 @@ export const globalConstants: GlobalConstants = {
       statusCodeName: 'HttpsStatusCodeCreated',
       code: 201,
     },
+    TemporaryRedirect: {
+      statusCodeName: 'TemporaryRedirect',
+      code: 307,
+    },
     BadRequestException: {
       statusCodeName: 'BadRequestException',
       code: 400,

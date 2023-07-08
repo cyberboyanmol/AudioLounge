@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { getConfig } from '../config';
 import { logger } from './logger';
 import { globalConstants } from './constants';
@@ -7,7 +7,7 @@ import { CustomResponse } from '../interfaces/response.interface';
 abstract class Api {
   public send<R>(
     res: Response<CustomResponse<R>>,
-    data: R,
+    data: R | null,
     message = 'healthy',
     status: string = globalConstants.status.success,
     statusCode: number = globalConstants.statusCode.HttpsStatusCodeOk.code,
@@ -22,6 +22,20 @@ abstract class Api {
       message,
       data,
     });
+  }
+
+  public redirect(
+    req: Request,
+    res: Response,
+    redirectUrl: string,
+    statusCode: number = globalConstants.statusCode.TemporaryRedirect.code,
+  ) {
+    if (getConfig().env === 'development') {
+      // need to change based on environment
+      logger.info(` Request move  from $${req.url} to ${redirectUrl}`);
+    }
+
+    return res.status(statusCode).redirect(redirectUrl);
   }
 }
 
