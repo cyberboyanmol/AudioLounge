@@ -11,6 +11,7 @@ export const productionConfig: Config = {
     format: 'tiny',
     level: 'info',
   },
+  allowedOrigins: ['http://localhost:3000'],
   ARGON_SECRET_PEPPER: String(process.env.ARGON_SECRET_PEPPER),
   JWT_ACCESS_TOKEN_EXPIRATION: String(process.env.JWT_ACCESS_TOKEN_EXPIRATION),
   JWT_REFRESH_TOKEN_EXPIRATION: String(process.env.JWT_REFRESH_TOKEN_EXPIRATION),

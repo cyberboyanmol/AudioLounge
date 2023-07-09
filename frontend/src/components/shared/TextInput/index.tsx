@@ -3,11 +3,13 @@ import styles from "./TextInput.module.css";
 import { HiOutlineMail } from "react-icons/hi";
 export type TextInputProps = InputHTMLAttributes<HTMLInputElement> & {
   fullWidth?: boolean;
+  type: string;
   icon: React.ReactNode;
 };
 
 const TextInput: React.FC<TextInputProps> = ({
   fullWidth = false,
+  type = "text",
   icon,
   ...inputProps
 }) => {
@@ -19,6 +21,7 @@ const TextInput: React.FC<TextInputProps> = ({
         style={{
           width: fullWidth ? "100%" : "inherit",
         }}
+        type={type}
         {...inputProps}
       />
     </div>

@@ -1,6 +1,7 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import uiReducer from "./ui";
+import authReducer from "./auth";
+import verifyReducer from "./verify";
 export default combineReducers({
-  ui: uiReducer,
+  auth: authReducer,
+  verify: verifyReducer,
 });
-

@@ -15,14 +15,15 @@ model User {
   email           String          @unique
   name            String?
   avatar          String?
-  refresh_token   String?
+  googleId        String?         @map("google_id")
   activated       Boolean         @default(false)
   provider        Provider        @default(LOCAL)
-  updated_At      DateTime        @updatedAt
-  created_At      DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt @map(name: "updated_at")
+  createdAt       DateTime        @default(now()) @map(name: "created_at")
   registeredRoom  EventRoom[]     @relation("UserInRoom")
   roomcreatedByme EventRoom[]
   SpeakerInRoom   SpeakerInRoom[]
+  refreshTokens   Refresh[]
 }
 
 model EventRoom {
@@ -46,6 +47,15 @@ model SpeakerInRoom {
   eventroomId String
 
   @@id([speakerId, eventroomId])
+}
+
+model Refresh {
+  refreshId    String @id @unique @default(uuid())
+  user         User   @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  userId       String
+  refreshtoken String @unique
+
+  @@index([userId])
 }
 
 enum RoomType {

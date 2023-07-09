@@ -2,6 +2,7 @@ import cors from 'cors';
 import express from 'express';
 import morgan from 'morgan';
 import helmet from 'helmet';
+import cookieParser from 'cookie-parser';
 import type { Config } from './interfaces/config.interface';
 import { Route } from './interfaces/route.interface';
 import { getConfig } from './config';
@@ -28,27 +29,19 @@ export class App {
   }
 
   private initializeMiddleware() {
-    const corsOptions = {
-      allowedHeaders: [
-        'Origin',
-        'X-Requested-With',
-        'Content-Type',
-        'Accept',
-        'X-Access-Token',
-        'Authorization',
-        'Access-Control-Allow-Origin',
-        'Access-Control-Allow-Headers',
-        'Access-Control-Allow-Methods',
-      ],
-      methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
-      preflightContinue: true,
-      origin: '*',
-    };
     this.app.use(morgan(this.config.log.format));
     this.app.use(helmet());
-    this.app.use(cors(corsOptions));
-    this.app.use(express.json({ limit: '20mb' }));
+
+    this.app.use(
+      cors({
+        optionsSuccessStatus: 200,
+        origin: getConfig().allowedOrigins,
+        credentials: true,
+      }),
+    );
     this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(express.json({ limit: '20mb' }));
+    this.app.use(cookieParser());
   }
 
   private initializeRoutes(routes: Route[]) {

@@ -9,8 +9,8 @@ abstract class Api {
     res: Response<CustomResponse<R>>,
     data: R | null,
     message = 'healthy',
-    status: string = globalConstants.status.success,
     statusCode: number = globalConstants.statusCode.HttpsStatusCodeOk.code,
+    status: string = globalConstants.status.success,
   ) {
     if (getConfig().env === 'development') {
       // need to change based on environment

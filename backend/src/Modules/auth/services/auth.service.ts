@@ -53,7 +53,7 @@ export class AuthService {
       },
     });
 
-    return { user: newUser };
+    return newUser;
   }
 
   public async findUser(email: string) {

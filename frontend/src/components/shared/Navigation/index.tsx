@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 const Navigation = () => {
   const user = "/images/monkey-avatar.png";
   const router = useRouter();
+  const isHome = router.pathname === "/";
   const [isOpen, setIsOpen] = useState(false);
   const isAuthenticated = false;
   const toggleMenu = () => {
@@ -58,7 +59,7 @@ const Navigation = () => {
           )}
         </div>
       )}
-      {!isAuthenticated && (
+      {!isAuthenticated && isHome && (
         <Link href={"/login"} className={styles.getStarted}>
           Get Started
         </Link>
