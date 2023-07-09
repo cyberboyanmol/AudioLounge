@@ -4,12 +4,14 @@ import { Button, Card, TextInput } from "@/components/shared";
 import styles from "../stepPhoneEmail.module.css";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
-import axios from "axios";
+
 import { toast } from "react-toastify";
-import publicClient, { sendOtp } from "@/axios/axiosPublic.client";
+
 import { useDispatch } from "react-redux";
 import verify, { setVerify } from "@/store/slices/verify";
-import { verifyOtpProps } from "@/types";
+import { SendOtpProps, verifyOtpProps } from "@/types";
+import { sendOtp } from "@/axios/axiosPublic.client";
+
 const Email: React.FC<StepProps> = ({ onNext }) => {
   const [email, setEmail] = useState("");
   const dispatch = useDispatch();
@@ -33,7 +35,7 @@ const Email: React.FC<StepProps> = ({ onNext }) => {
     }
 
     try {
-      const response = await sendOtp({ email });
+      const response = await sendOtp<SendOtpProps>({ email });
       console.log(response);
       const { data, message } = response.data;
 
@@ -62,8 +64,7 @@ const Email: React.FC<StepProps> = ({ onNext }) => {
         placeholder="robin@gmail.com"
       />{" "}
       <p className={styles.bottomParagraph}>
-        By entering your Email, you’re agreeing to our Terms of Service and
-        Privacy Policy. Thanks!
+        we will send you a One Time Password on your mail.
       </p>
       <div className={styles.actionButtonWrap}>
         <Button

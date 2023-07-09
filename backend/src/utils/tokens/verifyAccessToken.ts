@@ -1,19 +1,20 @@
-import { Request as ExpressRequest, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import jwt, { SignOptions } from 'jsonwebtoken';
 import fs from 'fs';
 import path from 'path';
 import { DecodedToken } from 'utils';
-import { CustomResponse } from 'interfaces';
-import { globalConstants } from 'lib/constants';
-import { HttpExceptionError } from 'exceptions/http.exception';
-
-interface Request extends ExpressRequest {
-  user?: DecodedToken;
-}
+import { CustomResponse } from '../../interfaces';
+import { globalConstants } from '../../lib/constants';
+import { HttpExceptionError } from '../../exceptions/http.exception';
+import { CustomRequest } from '../../interfaces/request.interface';
 
 const publicAccessTokenKeyPath = path.resolve(__dirname, '..', '..', 'keys', 'accessToken', 'public.key');
 
-export async function verifyAccessToken(req: Request, res: Response<CustomResponse<null>>, next: NextFunction) {
+export async function verifyAccessToken(
+  req: CustomRequest<DecodedToken>,
+  res: Response<CustomResponse<null>>,
+  next: NextFunction,
+) {
   try {
     const authorization = req.headers.authorization as string;
 
@@ -46,6 +47,7 @@ export async function verifyAccessToken(req: Request, res: Response<CustomRespon
 
       const decoded = jwt.verify(token, publickey, options) as DecodedToken;
       req.user = { userId: decoded.userId };
+
       next();
     } catch (err) {
       if ((err as Error).name !== 'TokenExpiredError') {

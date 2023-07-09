@@ -1,8 +1,9 @@
 import jwt, { SignOptions } from 'jsonwebtoken';
 import fs from 'fs';
 import path from 'path';
-import { Payload } from '../';
-import { getConfig } from 'config';
+
+import { Payload } from '..';
+import { getConfig } from '../../config';
 
 const privateAccessKeyPath = path.resolve(__dirname, '..', '..', 'keys', 'accessToken', 'private.key');
 

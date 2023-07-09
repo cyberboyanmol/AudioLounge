@@ -1,11 +1,11 @@
-import { HttpExceptionError } from 'exceptions/http.exception';
+import { HttpExceptionError } from '../../../exceptions/http.exception';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
-import Api from 'lib/api';
-import { globalConstants } from 'lib/constants';
+import Api from '../../../lib/api';
+import { globalConstants } from '../../../lib/constants';
 import { RefreshAccessTokenService } from '../services/refreshAccessToken.service';
 import { Payload, setAccessToken, setRefreshToken, verifyRefreshToken } from 'utils';
 import { AuthService } from '../services/auth.service';
-import { getConfig } from 'config';
+import { getConfig } from '../../../config';
 
 export class RefreshAccessToken extends Api {
   private readonly RefreshAccessTokenService: RefreshAccessTokenService;
@@ -34,7 +34,7 @@ export class RefreshAccessToken extends Api {
       // if user not found
       if (!user) {
         // means refresh token resuse
-        const decoded = (await verifyRefreshToken(refreshToken)) as Payload;
+        const decoded = (await this.verifyRefreshToken(refreshToken)) as Payload;
         // await this.AuthService.findUser(decoded.email);
         //    remove all the refresh token from refresh model belong to hackedUser
         await this.RefreshAccessTokenService.deleteAllRefreshTokenForUser(decoded.userId);
@@ -45,7 +45,7 @@ export class RefreshAccessToken extends Api {
         );
       }
 
-      const decoded = (await verifyRefreshToken(refreshToken)) as Payload;
+      const decoded = (await this.verifyRefreshToken(refreshToken)) as Payload;
 
       if (decoded.email !== user.email) {
         throw new HttpExceptionError(globalConstants.statusCode.UnauthorizedException.code, ' Invalid  user   !');

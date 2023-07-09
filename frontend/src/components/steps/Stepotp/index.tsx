@@ -8,8 +8,8 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { toast } from "react-toastify";
-import { verifyOtp } from "@/axios/axiosPublic.client";
-import { verifyOtpProps, verifySliceInitialProps } from "@/types";
+import { sendOtp, verifyOtp } from "@/axios/axiosPublic.client";
+import { SendOtpProps, verifyOtpProps, verifySliceInitialProps } from "@/types";
 import { setUser } from "@/store/slices/auth";
 import { setVerify } from "@/store/slices/verify";
 
@@ -20,6 +20,9 @@ const StepOtp = () => {
     (state) => state.verify
   ) as verifySliceInitialProps;
   console.log(otp);
+
+  console.log(otp);
+
   const router = useRouter();
 
   const onChange = (value: string) => setOtp(value);
@@ -32,6 +35,32 @@ const StepOtp = () => {
     background: "var(--linearGradient)",
     color: "var(--primaryTextColor)",
   };
+
+  const resendOtp = async () => {
+    const email = verify.email;
+    if (!email) {
+      toast.error("Email is Required");
+      return;
+    }
+
+    try {
+      const response = await sendOtp<SendOtpProps>({ email });
+      console.log(response);
+      const { data, message } = response.data;
+
+      dispatch(
+        setVerify({
+          email: data.email,
+          hash: data.hash,
+        })
+      );
+      toast.success(message);
+    } catch (err) {
+      console.log(err);
+      toast.error(err.response.data.message[0].error);
+    }
+  };
+
   const otpsubmitHandler = async () => {
     if (!otp) return toast.error("Enter your valid otp ");
     try {
@@ -65,10 +94,10 @@ const StepOtp = () => {
   };
   return (
     <div className="cardWrapper">
-      <Card title="Enter the code we just texted you" icon="lock-emoji">
+      <Card  title="Enter the code we just texted you" icon="lock-emoji">
         <OtpInput value={otp} onChange={onChange} valueLength={6} />
         <span className={styles.reSendOtp}>
-          Didn’t receive? <span> Tap to resend</span>
+          Didn’t receive? <span onClick={resendOtp}> Tap to resend</span>
         </span>
         <div className={styles.actionButtonWrap}>
           <Button

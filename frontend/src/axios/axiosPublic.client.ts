@@ -33,7 +33,11 @@ publicClient.interceptors.response.use(
 );
 
 // List of all the endpoints
-export const sendOtp = (T: SendOtpProps) => publicClient.post("/auth/login", T);
+// export const sendOtp = (T: SendOtpProps) => publicClient.post("/auth/login", T);
+
+export function sendOtp<T extends object>(data: T) {
+  return publicClient.post("/auth/login", data);
+}
 export const verifyOtp = (T: verifyOtpProps) =>
   publicClient.post("/auth/verify-otp", T);
 

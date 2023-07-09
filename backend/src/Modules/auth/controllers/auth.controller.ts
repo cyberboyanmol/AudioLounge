@@ -1,15 +1,13 @@
-import { NextFunction, Request, RequestHandler, Response, query } from 'express';
+import { NextFunction, Request, RequestHandler, Response } from 'express';
 import Api from '../../../lib/api';
 import { AuthService } from '../services/auth.service';
-import { CustomResponse } from '../../../interfaces/response.interface';
-import { AuthDto } from '../dtos/auth.dto';
 import { HttpExceptionError } from '../../../exceptions/http.exception';
 import { globalConstants } from '../../../lib/constants';
 import { OtpService, setAccessToken, setRefreshToken } from '../../../utils';
 import { User } from '@prisma/client';
-import { getConfig } from 'config';
+import { getConfig } from '../../../config';
 import { RefreshAccessTokenService } from '../services/refreshAccessToken.service';
-import { logger } from 'lib/logger';
+import { logger } from '.../../lib/logger';
 
 export class AuthController extends Api {
   private readonly AuthService: AuthService;
@@ -71,12 +69,12 @@ export class AuthController extends Api {
 
           if (cookies.jwt) {
             const refreshToken = cookies.jwt;
-            logger.info('sdhfjsd');
-            await this.RefreshAccessTokenService.removeRefreshToken(user.userId, refreshToken);
 
             const foundUser = await this.RefreshAccessTokenService.findUserBasedOnRefreshToken(refreshToken);
 
-            if (!foundUser) {
+            if (foundUser) {
+              await this.RefreshAccessTokenService.removeRefreshToken(user.userId, refreshToken);
+            } else {
               await this.RefreshAccessTokenService.deleteAllRefreshTokenForUser(user.userId);
             }
             res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true });

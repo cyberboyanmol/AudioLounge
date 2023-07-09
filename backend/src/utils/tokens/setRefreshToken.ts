@@ -2,7 +2,7 @@ import jwt, { SignOptions } from 'jsonwebtoken';
 import fs from 'fs';
 import path from 'path';
 import { Payload } from '../';
-import { getConfig } from 'config';
+import { getConfig } from '../../config';
 
 const privateRefreshKeyPath = path.resolve(__dirname, '..', '..', 'keys', 'refreshToken', 'private.key');
 

@@ -20,19 +20,11 @@ export class RefreshAccessTokenService {
       },
     })) as UserWithRefresh | null;
 
-    // if (user) {
-    //   return await this.prisma.user.findUnique({
-    //     where: {
-    //       userId: user.userId,
-    //     },
-    //   });
-    // }
-
     return user?.user;
   }
 
   public async deleteAllRefreshTokenForUser(userId: string) {
-    this.prisma.user.update({
+    const deleteUser = await this.prisma.user.update({
       where: {
         userId,
       },
@@ -42,6 +34,7 @@ export class RefreshAccessTokenService {
         },
       },
     });
+    return deleteUser;
   }
 
   public async removeRefreshToken(userId: string, refreshToken: string) {

@@ -27,7 +27,7 @@ async function validationPipe<T extends object>(
   }
 }
 
-export function createValidationPipe<T extends object>(dtoClass: new () => T) {
+export function ValidationPipe<T extends object>(dtoClass: new () => T) {
   return (req: Request, res: Response, next: NextFunction) => {
     validationPipe(req, res, next, dtoClass);
   };
