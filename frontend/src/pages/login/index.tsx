@@ -17,11 +17,15 @@ const Login = () => {
   const [step, setStep] = useState<number>(1);
   const Step = steps[step];
 
+  console.log(process.env.NEXT_PUBLIC_BACKEND_API_URL ,);
   function onNext() {
     setStep(step + 1);
   }
+  function onPrevious() {
+    setStep(step - 1);
+  }
 
-  return <Step onNext={onNext} />;
+  return <Step onNext={onNext} onPrevious={onPrevious} />;
 };
 
 export default Login;

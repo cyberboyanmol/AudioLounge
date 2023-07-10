@@ -24,7 +24,7 @@ const Email: React.FC<StepProps> = ({ onNext }) => {
   const externalStyle = {
     background: "var(--linearGradient)",
     color: "var(--primaryTextColor)",
-
+    margin: "0 auto",
     // paddingRight: "2.5rem",
     // paddingLeft: "2.5rem",
   };

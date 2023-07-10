@@ -22,9 +22,10 @@ const phoneEmailMap: phoneEmailMapProps = {
 
 export type StepProps = {
   onNext: () => void;
+  onPrevious: () => void;
 };
 
-const StepPhoneEmail: React.FC<StepProps> = ({ onNext }) => {
+const StepPhoneEmail: React.FC<StepProps> = ({ onNext, onPrevious }) => {
   const [type, setType] = useState("phone");
   const Component = phoneEmailMap[type];
 
@@ -71,7 +72,7 @@ const StepPhoneEmail: React.FC<StepProps> = ({ onNext }) => {
           </div>
         </div>
       </div> */}
-      <Email onNext={onNext} />
+      <Email onNext={onNext} onPrevious={onPrevious} />
     </motion.div>
   );
 };

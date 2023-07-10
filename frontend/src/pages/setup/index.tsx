@@ -19,9 +19,12 @@ const SetupProfile = () => {
     setStep(step + 1);
   }
 
+  function onPrevious() {
+    setStep(step - 1);
+  }
   return (
     <div className="cardWrapper">
-      <Component onNext={onNext} />
+      <Component onNext={onNext} onPrevious={onPrevious} />
     </div>
   );
 };

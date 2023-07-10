@@ -1,5 +1,8 @@
 import { Router } from 'express';
 import prisma from '../../lib/prisma-client';
+import { UserWithRefresh } from 'modules/auth/interfaces';
+import { User } from '@prisma/client';
+import { UpdateUserDto } from './dtos/updateUser.dto';
 
 export class UserService {
   private readonly prisma = prisma;
@@ -21,8 +24,13 @@ export class UserService {
     return { user };
   }
 
-  public async updateUser() {
+  public async updateUser(userId: string, updateData: UpdateUserDto) {
+    console.log(updateData);
 
-    
+    const updateUser = await this.prisma.user.update({
+      where: { userId },
+      data: updateData,
+    });
+    return updateUser;
   }
 }

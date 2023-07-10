@@ -88,3 +88,10 @@ body {
     font-size: calc(13px + 0.2vw);
   }
 } */
+
+.actionButtonWrap {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}

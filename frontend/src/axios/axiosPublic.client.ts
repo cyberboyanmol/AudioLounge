@@ -2,10 +2,11 @@ import { axiosPrivate } from "@/hooks/useAxiosPrivate";
 import { SendOtpProps, verifyOtpProps } from "@/types";
 import axios, { InternalAxiosRequestConfig } from "axios";
 
-const baseURL = "http://localhost:5000/api/v1/";
+const baseURL = process.env.NEXT_PUBLIC_BACKEND_API_URL;
+
 
 const publicClient = axios.create({
-  baseURL: baseURL,
+  baseURL: `${baseURL}/api/v1/`,
   withCredentials: true,
 });
 

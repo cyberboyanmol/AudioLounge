@@ -25,4 +25,15 @@ export class UserController extends Api {
       next(err);
     }
   };
+
+  public updateMyProfileHandler: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { userId } = req.user;
+      const updateUser = await this.userServie.updateUser(userId, req.body);
+
+      this.send(res, updateUser, 'Infomation update successfully');
+    } catch (err) {
+      next(err);
+    }
+  };
 }

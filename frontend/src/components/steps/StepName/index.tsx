@@ -9,6 +9,7 @@ import { setUser } from "@/store/slices/auth";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { authSliceInitialProps } from "@/types";
+import { toast } from "react-toastify";
 
 const StepName: React.FC<StepProps> = ({ onNext }) => {
   const [fullname, setFullname] = useState("");
@@ -20,6 +21,7 @@ const StepName: React.FC<StepProps> = ({ onNext }) => {
   >;
   function NameHandler() {
     if (!fullname) {
+      toast.error("Name is required ");
       return;
     }
 

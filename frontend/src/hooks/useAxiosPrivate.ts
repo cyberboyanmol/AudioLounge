@@ -4,11 +4,12 @@ import { RootState } from "@/store";
 import { useEffect, useState, useRef } from "react";
 
 import axios, { InternalAxiosRequestConfig } from "axios";
+const baseURL = process.env.NEXT_PUBLIC_BACKEND_API_URL;
 
-const baseURL = "http://localhost:5000/api/v1/";
+// const baseURL = "http://localhost:5000/api/v1/";
 
 export const axiosPrivate = axios.create({
-  baseURL,
+  baseURL: `${baseURL}/api/v1`,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });

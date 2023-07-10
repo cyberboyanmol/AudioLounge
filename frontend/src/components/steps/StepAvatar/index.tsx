@@ -2,16 +2,24 @@ import { Button, Card } from "@/components/shared";
 import React, { useState } from "react";
 import styles from "./StepAvatar.module.css";
 import Image from "next/image";
-import { AiOutlineArrowRight } from "react-icons/ai";
+import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { authSliceInitialProps } from "@/types";
-const StepAvatar = () => {
+import { StepProps } from "../StepPhoneEmail";
+import { externalStylePrevious } from "@/utils";
+import { toast } from "react-toastify";
+import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+import { userEndpoint } from "@/axios/modules/user.api";
+const StepAvatar: React.FC<StepProps> = ({ onPrevious }) => {
   const [image, setImage] = useState<string>("/images/monkey-avatar.png");
   const name = useSelector<RootState>((state) => state.auth.user.name) as Omit<
     authSliceInitialProps,
     "accessToken"
   >;
+
+  const axiosPrivate = useAxiosPrivate();
+
   function captureImage(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (file) {
@@ -19,8 +27,8 @@ const StepAvatar = () => {
       reader.readAsDataURL(file);
       reader.onloadend = () => {
         if (typeof reader.result === "string") {
-          console.log(image);
           setImage(reader.result);
+          console.log(image);
         }
         //   dispatch
       };
@@ -39,16 +47,19 @@ const StepAvatar = () => {
     // paddingLeft: "2.5rem",
   };
 
-  const onKeyDownHandler: React.KeyboardEventHandler<HTMLInputElement> = (
-    event
-  ) => {
-    if (event.key === "Enter" && event.keyCode === 13) {
-      submitHandler();
-    }
-  };
   const submitHandler = () => {
     console.log("update user ");
+    try {
+      const response = axiosPrivate.put(userEndpoint.updateUser, {
+        name,
+        avatar: image,
+        activated: true,
+      });
+    } catch (err) {
+      toast.error(err);
+    }
   };
+
   return (
     <>
       <Card title={`Okay, ${name}`} icon="monkey-emoji">
@@ -64,7 +75,6 @@ const StepAvatar = () => {
         </div>
         <div>
           <input
-            onKeyDown={onKeyDownHandler}
             onChange={captureImage}
             id="user_avatar"
             type="file"
@@ -74,11 +84,17 @@ const StepAvatar = () => {
             choose a different photo
           </label>
         </div>
-        <div>
+        <div className="actionButtonWrap">
+          <Button
+            externalStyle={externalStylePrevious}
+            onClick={onPrevious}
+            text="Previous"
+            icon={<AiOutlineArrowLeft style={ButtonStyle} />}
+          />
           <Button
             externalStyle={externalStyle}
             onClick={submitHandler}
-            text="Next"
+            text="Submit"
             icon={<AiOutlineArrowRight style={ButtonStyle} />}
           />
         </div>
