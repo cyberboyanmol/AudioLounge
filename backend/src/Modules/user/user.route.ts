@@ -17,10 +17,10 @@ export class UserRoute implements Route {
   private initializeRoutes() {
     this.router.get(`${this.path}/me`, isAuthenticated, this.userController.getMyProfileHandler);
     this.router.put(
-      `${this.path}/update`,
+      `${this.path}/activate`,
       isAuthenticated,
       ValidationPipe(UpdateUserDto),
-      this.userController.updateMyProfileHandler,
+      this.userController.activateMyProfileHandler,
     );
   }
 }

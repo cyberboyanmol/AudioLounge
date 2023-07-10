@@ -14,7 +14,11 @@ import { setAccessToken, setUser } from "@/store/slices/auth";
 import { setVerify } from "@/store/slices/verify";
 import userApi from "@/axios/modules/user.api";
 import { StepProps } from "../StepPhoneEmail";
-import { externalStylePrevious } from "@/utils";
+import {
+  buttonBorder,
+  buttonExternalStyle,
+  externalStylePrevious,
+} from "@/utils";
 
 const StepOtp: React.FC<StepProps> = ({ onPrevious }) => {
   const [otp, setOtp] = useState<string>("");
@@ -101,7 +105,7 @@ const StepOtp: React.FC<StepProps> = ({ onPrevious }) => {
     <div className="cardWrapper">
       <Card title="OTP Verification" icon="lock-emoji">
         <span className={styles.otpSendTo}>
-          Enter the Otp sent to your <span>{'anmolgangwar64@gmail.com'} </span>
+          Enter the Otp sent to your <span>{"anmolgangwar64@gmail.com"} </span>
         </span>
         <OtpInput value={otp} onChange={onChange} valueLength={6} />
         <span className={styles.reSendOtp}>
@@ -109,13 +113,14 @@ const StepOtp: React.FC<StepProps> = ({ onPrevious }) => {
         </span>
         <div className={"actionButtonWrap"}>
           <Button
-            externalStyle={externalStylePrevious}
+            buttonExternalStyle={externalStylePrevious}
             onClick={onPrevious}
             text="Previous"
             icon={<AiOutlineArrowLeft style={ButtonStyle} />}
           />
           <Button
-            externalStyle={externalStyle}
+            buttonExternalStyle={buttonExternalStyle}
+            buttonBorder={buttonBorder}
             onClick={otpsubmitHandler}
             text="Next"
             icon={<AiOutlineArrowRight style={ButtonStyle} />}

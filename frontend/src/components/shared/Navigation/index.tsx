@@ -59,6 +59,7 @@ const Navigation = () => {
           )}
         </div>
       )}
+      <div></div>
       {!isAuthenticated && isHome && (
         <Link href={"/login"} className={styles.getStarted}>
           Get Started

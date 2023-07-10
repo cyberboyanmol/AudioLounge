@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { authSliceInitialProps } from "@/types";
 import { toast } from "react-toastify";
+import { buttonBorder, buttonExternalStyle } from "@/utils";
 
 const StepName: React.FC<StepProps> = ({ onNext }) => {
   const [fullname, setFullname] = useState("");
@@ -40,12 +41,6 @@ const StepName: React.FC<StepProps> = ({ onNext }) => {
     fontWeight: "bold",
   };
 
-  const externalStyle = {
-    background: "var(--linearGradient)",
-    color: "var(--primaryTextColor)",
-    // paddingRight: "2.5rem",
-    // paddingLeft: "2.5rem",
-  };
   const onKeyDownHandler: React.KeyboardEventHandler<HTMLInputElement> = (
     event
   ) => {
@@ -69,7 +64,8 @@ const StepName: React.FC<StepProps> = ({ onNext }) => {
         </p>
         <div>
           <Button
-            externalStyle={externalStyle}
+            buttonBorder={buttonBorder}
+            buttonExternalStyle={buttonExternalStyle}
             onClick={NameHandler}
             text="Next"
             icon={<AiOutlineArrowRight style={ButtonStyle} />}

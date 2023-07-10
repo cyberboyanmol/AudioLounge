@@ -9,16 +9,18 @@ import { getConfig } from './config';
 import { globalConstants } from './lib/constants';
 import { logger } from './lib/logger';
 import { errorMiddleware } from './middlewares/error.middleware';
-
+import http, { Server } from 'http';
 export class App {
   public app: express.Application;
   public port: number;
   public config: Config;
   public env: string;
+  public server: Server;
 
   constructor(routes: Route[]) {
     this.config = getConfig();
     this.app = express();
+    this.server = http.createServer(this.app);
     this.env = this.config.env;
     this.port = this.config.server.port;
     this.initializeMiddleware();

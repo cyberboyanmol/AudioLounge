@@ -1,6 +1,7 @@
 import StepAvatar from "@/components/steps/StepAvatar";
 import StepName from "@/components/steps/StepName";
 import { StepProps } from "@/components/steps/StepPhoneEmail";
+import { NextPage } from "next";
 import React, { useState } from "react";
 
 export type loginStepsProps = {
@@ -11,7 +12,7 @@ const steps: loginStepsProps = {
   1: StepName,
   2: StepAvatar,
 };
-const SetupProfile = () => {
+const SetupProfile: NextPage = () => {
   const [step, setStep] = useState<number>(1);
   const Component = steps[step];
 

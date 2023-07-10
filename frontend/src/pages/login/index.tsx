@@ -2,6 +2,7 @@ import { StepPhoneEmail, Stepotp } from "@/components";
 import { StepProps } from "@/components/steps/StepPhoneEmail";
 import Email from "@/components/steps/StepPhoneEmail/Email";
 import Phone from "@/components/steps/StepPhoneEmail/Phone";
+import { NextPage } from "next";
 import React, { useState } from "react";
 
 export type loginStepsProps = {
@@ -13,11 +14,10 @@ const steps: loginStepsProps = {
   2: Stepotp,
 };
 
-const Login = () => {
+const Login: NextPage = () => {
   const [step, setStep] = useState<number>(1);
   const Step = steps[step];
 
-  console.log(process.env.NEXT_PUBLIC_BACKEND_API_URL ,);
   function onNext() {
     setStep(step + 1);
   }

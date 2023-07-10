@@ -5,7 +5,7 @@ export const userEndpoint = {
   signin: "/auth/login",
   verifyEmail: "/auth/verify",
   getInfo: "/user/me",
-  updateUser: "/user/update",
+  updateUser: "/user/activate",
 };
 
 const userApi = {

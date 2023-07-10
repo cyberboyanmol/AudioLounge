@@ -21,14 +21,16 @@ const Email: React.FC<StepProps> = ({ onNext }) => {
     fontWeight: "bold",
   };
 
-  const externalStyle = {
-    background: "var(--linearGradient)",
+  const buttonExternalStyle = {
+    background: "var(--primaryBgColor)",
     color: "var(--primaryTextColor)",
-    margin: "0 auto",
-    // paddingRight: "2.5rem",
-    // paddingLeft: "2.5rem",
+    width: "100%",
   };
 
+  const buttonBorder = {
+    background: "var(--linearGradient)",
+    width: "100%",
+  };
   const SignInWithEmailHandler = async () => {
     if (!email) {
       toast.error("Email is Required");
@@ -75,7 +77,8 @@ const Email: React.FC<StepProps> = ({ onNext }) => {
       </p>
       <div className={styles.actionButtonWrap}>
         <Button
-          externalStyle={externalStyle}
+          buttonBorder={buttonBorder}
+          buttonExternalStyle={buttonExternalStyle}
           onClick={SignInWithEmailHandler}
           text="Next"
           icon={<AiOutlineArrowRight style={ButtonStyle} />}

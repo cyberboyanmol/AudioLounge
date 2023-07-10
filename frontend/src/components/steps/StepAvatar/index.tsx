@@ -7,12 +7,18 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { authSliceInitialProps } from "@/types";
 import { StepProps } from "../StepPhoneEmail";
-import { externalStylePrevious } from "@/utils";
+import {
+  buttonBorder,
+  buttonExternalStyle,
+  externalStylePrevious,
+} from "@/utils";
 import { toast } from "react-toastify";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { userEndpoint } from "@/axios/modules/user.api";
 const StepAvatar: React.FC<StepProps> = ({ onPrevious }) => {
-  const [image, setImage] = useState<string>("/images/monkey-avatar.png");
+  const [image, setImage] = useState<string>(
+    "https://img.freepik.com/premium-vector/young-smiling-man-avatar-man-with-brown-beard-mustache-hair-wearing-yellow-sweater-sweatshirt-3d-vector-people-character-illustration-cartoon-minimal-style_365941-860.jpg?w=740"
+  );
   const name = useSelector<RootState>((state) => state.auth.user.name) as Omit<
     authSliceInitialProps,
     "accessToken"
@@ -40,21 +46,15 @@ const StepAvatar: React.FC<StepProps> = ({ onPrevious }) => {
     fontWeight: "bold",
   };
 
-  const externalStyle = {
-    background: "var(--linearGradient)",
-    color: "var(--primaryTextColor)",
-    // paddingRight: "2.5rem",
-    // paddingLeft: "2.5rem",
-  };
-
-  const submitHandler = () => {
+  const submitHandler = async () => {
     console.log("update user ");
     try {
-      const response = axiosPrivate.put(userEndpoint.updateUser, {
+      const response = await axiosPrivate.put(userEndpoint.updateUser, {
         name,
         avatar: image,
         activated: true,
       });
+      console.log(response.data);
     } catch (err) {
       toast.error(err);
     }
@@ -86,13 +86,14 @@ const StepAvatar: React.FC<StepProps> = ({ onPrevious }) => {
         </div>
         <div className="actionButtonWrap">
           <Button
-            externalStyle={externalStylePrevious}
+            buttonExternalStyle={externalStylePrevious}
             onClick={onPrevious}
             text="Previous"
             icon={<AiOutlineArrowLeft style={ButtonStyle} />}
           />
           <Button
-            externalStyle={externalStyle}
+            buttonBorder={buttonBorder}
+            buttonExternalStyle={buttonExternalStyle}
             onClick={submitHandler}
             text="Submit"
             icon={<AiOutlineArrowRight style={ButtonStyle} />}

@@ -9,7 +9,8 @@ import { SiMinutemailer } from "react-icons/si";
 
 import { useRouter } from "next/router";
 import { Button, Card } from "@/components";
-export default function Home() {
+import GuestRoute from "@/components/ProtectedPage/GuestRoute";
+const Home = () => {
   const router = useRouter();
   const startRegister = () => {
     router.push("/login");
@@ -20,18 +21,22 @@ export default function Home() {
     fontWeight: "bold",
   };
 
-  const externalStyle = {
-    background: "var(--linearGradient)",
-    color: "var(--primaryTextColor)",
-    width: "100%",
-    justifyContent: "center",
-    gap: ".6rem",
-  };
   const externalStyleGoogle = {
     width: "100%",
     gap: ".6rem",
     justifyContent: "center",
     flexDirection: "row-reverse",
+  };
+
+  const buttonExternalStyle = {
+    background: "var(--primaryBgColor)",
+    color: "var(--primaryTextColor)",
+    width: "100%",
+  };
+
+  const buttonBorder = {
+    width: "100%",
+    background: "var(--linearGradient)",
   };
   const SignInWithGoogle = () => {};
 
@@ -52,7 +57,8 @@ export default function Home() {
         </p>
         <div className={styles.actionButtonWrap}>
           <Button
-            externalStyle={externalStyle}
+            buttonBorder={buttonBorder}
+            buttonExternalStyle={buttonExternalStyle}
             onClick={startRegister}
             text="Sign In with Email"
             icon={<SiMinutemailer style={ButtonStyle} />}
@@ -60,7 +66,7 @@ export default function Home() {
         </div>
         <div className={styles.actionButtonWrap}>
           <Button
-            externalStyle={externalStyleGoogle}
+            buttonExternalStyle={externalStyleGoogle}
             onClick={SignInWithGoogle}
             text="Sign In with Google"
             icon={<FcGoogle style={ButtonStyle} />}
@@ -72,4 +78,6 @@ export default function Home() {
       </Card>
     </motion.div>
   );
-}
+};
+
+export default GuestRoute(Home);
