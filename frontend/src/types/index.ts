@@ -11,7 +11,7 @@ export type authSliceInitialProps = {
     updatedAt?: Date;
     createdAt?: Date;
   };
-  accessToken?: string;
+  accessToken: string;
 };
 
 enum provider {

@@ -1,5 +1,5 @@
 import { App } from './app';
-import { AuthRoute } from './modules';
-const app = new App([new AuthRoute()]);
+import { AuthRoute, UserRoute } from './modules';
+const app = new App([new AuthRoute(), new UserRoute()]);
 
 app.listen();

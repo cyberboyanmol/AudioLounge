@@ -18,6 +18,11 @@ export class UserService {
         roomcreatedByme: true,
       },
     });
-    return user;
+    return { user };
+  }
+
+  public async updateUser() {
+
+    
   }
 }

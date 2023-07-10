@@ -5,6 +5,7 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 type ButtonProps = {
   text: string;
   onClick: () => void;
+
   icon?: React.ReactNode;
   externalStyle?: React.CSSProperties;
 };
@@ -13,6 +14,7 @@ const Button: React.FC<ButtonProps> = ({
   text,
   icon,
   onClick,
+
   externalStyle,
 }) => {
   return (
@@ -20,6 +22,7 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       className={`${styles.button} `}
       style={externalStyle}
+     
     >
       <span>{text}</span>
       {icon}

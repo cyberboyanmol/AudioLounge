@@ -1,19 +1,25 @@
 import { useSelector } from "react-redux";
 import useRefreshToken from "./useRefreshToken";
 import { RootState } from "@/store";
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
+
 import axios, { InternalAxiosRequestConfig } from "axios";
 
-const baseURL = "http://localhost:5000";
+const baseURL = "http://localhost:5000/api/v1/";
 
 export const axiosPrivate = axios.create({
   baseURL,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
+
 const useAxiosPrivate = () => {
-  const refresh = useRefreshToken();
   const accessToken = useSelector<RootState>((state) => state.auth.accessToken);
+
+  const isRefreshing = useRef(false);
+  const failedQueue = useRef([]);
+
+  const refresh = useRefreshToken();
 
   useEffect(() => {
     const requestInterceptor = axiosPrivate.interceptors.request.use(
@@ -27,24 +33,73 @@ const useAxiosPrivate = () => {
     );
 
     const responseInterceptor = axiosPrivate.interceptors.response.use(
-      (response) => response.data,
+      (response) => response,
       async (error) => {
-        const originalRequest = error?.config;
-        if (error?.response.status === 403 && !originalRequest.sent) {
-          originalRequest.sent = true;
-          const newAccessToken = refresh();
+        const originalRequest = error.config;
+        if (
+          error.response.status === 401 &&
+          originalRequest &&
+          !originalRequest._retry
+        ) {
+          if (isRefreshing.current) {
+            return new Promise((resolve, reject) => {
+              failedQueue.current.push({ resolve, reject });
+            })
+              .then((newAccessToken) => {
+                originalRequest.headers[
+                  "Authorization"
+                ] = `Bearer ${newAccessToken}`;
+                return axiosPrivate(originalRequest);
+              })
+              .catch((err) => {
+                return Promise.reject(err);
+              });
+          }
 
-          originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-          return axiosPrivate(originalRequest);
+          originalRequest._retry = true;
+          isRefreshing.current = true;
+
+          return new Promise((resolve, reject) => {
+            refresh()
+              .then((newAccessToken) => {
+                originalRequest.headers[
+                  "Authorization"
+                ] = `Bearer ${newAccessToken}`;
+                processQueue(null, newAccessToken);
+                resolve(axiosPrivate(originalRequest));
+              })
+              .catch((err) => {
+                processQueue(err, null);
+                reject(err);
+              })
+              .finally(() => {
+                isRefreshing.current = false;
+              });
+          });
         }
+
         return Promise.reject(error);
       }
     );
+
     return () => {
-      axios.interceptors.request.eject(requestInterceptor);
-      axios.interceptors.response.eject(responseInterceptor);
+      axiosPrivate.interceptors.request.eject(requestInterceptor);
+      axiosPrivate.interceptors.response.eject(responseInterceptor);
     };
   }, [accessToken, refresh]);
+
+  const processQueue = (error, token = null) => {
+    failedQueue.current.forEach((promise) => {
+      if (error) {
+        promise.reject(error);
+      } else {
+        promise.resolve(token);
+      }
+    });
+
+    failedQueue.current = [];
+  };
+
   return axiosPrivate;
 };
 

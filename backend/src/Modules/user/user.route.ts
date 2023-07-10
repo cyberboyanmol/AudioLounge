@@ -13,6 +13,6 @@ export class UserRoute implements Route {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}/me`, isAuthenticated, this.userController.getProfileHandler);
+    this.router.get(`${this.path}/me`, isAuthenticated, this.userController.getMyProfileHandler);
   }
 }

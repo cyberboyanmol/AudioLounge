@@ -19,9 +19,9 @@ export class AuthRoute implements Route {
   private initializeRoutes() {
     this.router.post(`${this.path}/login`, ValidationPipe(AuthDto), this.authController.EmailSignUpHandler);
     // otp verification
-    this.router.post(`${this.path}/verify-otp`, ValidationPipe(VerifyOtpDto), this.authController.VerifyOtpHandler);
+    this.router.post(`${this.path}/verify`, ValidationPipe(VerifyOtpDto), this.authController.VerifyOtpHandler);
 
-    this.router.get(`${this.path}/refresh`, this.refreshAccessToken.refreshAccessTokenHandler);
+    this.router.get(`${this.path}/refresh-token`, this.refreshAccessToken.refreshAccessTokenHandler);
     // google route
 
     this.router.get(`${this.path}/logout`, this.authController.logoutHandler);

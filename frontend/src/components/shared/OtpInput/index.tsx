@@ -62,6 +62,7 @@ const OtpInput: React.FC<OtpInputProps> = ({
     if (e.key !== "Backspace" || target.value === "") {
       return;
     }
+
     const newValue = value.substring(0, idx);
 
     // console.log(newValue);

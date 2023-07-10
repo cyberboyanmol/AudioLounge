@@ -3,17 +3,25 @@ import React, { useState } from "react";
 import styles from "./StepAvatar.module.css";
 import Image from "next/image";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { authSliceInitialProps } from "@/types";
 const StepAvatar = () => {
   const [image, setImage] = useState<string>("/images/monkey-avatar.png");
-  const name = "anmol";
-  const avatar = "d";
+  const name = useSelector<RootState>((state) => state.auth.user.name) as Omit<
+    authSliceInitialProps,
+    "accessToken"
+  >;
   function captureImage(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onloadend = () => {
-        if (typeof reader.result === "string") setImage(reader.result);
+        if (typeof reader.result === "string") {
+          console.log(image);
+          setImage(reader.result);
+        }
         //   dispatch
       };
     }
@@ -31,10 +39,19 @@ const StepAvatar = () => {
     // paddingLeft: "2.5rem",
   };
 
-  const submitHandler = () => {};
+  const onKeyDownHandler: React.KeyboardEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    if (event.key === "Enter" && event.keyCode === 13) {
+      submitHandler();
+    }
+  };
+  const submitHandler = () => {
+    console.log("update user ");
+  };
   return (
     <>
-      <Card title={`Okay, ${"Anmol Gangwar"}`} icon="monkey-emoji">
+      <Card title={`Okay, ${name}`} icon="monkey-emoji">
         <p className={styles.subHeading}>{`How's this photo?`}</p>
         <div className={styles.user_avatar}>
           <Image
@@ -47,6 +64,7 @@ const StepAvatar = () => {
         </div>
         <div>
           <input
+            onKeyDown={onKeyDownHandler}
             onChange={captureImage}
             id="user_avatar"
             type="file"

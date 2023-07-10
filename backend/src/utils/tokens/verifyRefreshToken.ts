@@ -4,6 +4,7 @@ import path from 'path';
 import { Payload } from 'utils';
 import { HttpExceptionError } from '../../exceptions/http.exception';
 import { globalConstants } from '../../lib/constants';
+import { logger } from 'lib/logger';
 
 const publicRefreshTokenKeyPath = path.resolve(__dirname, '..', '..', 'keys', 'refreshToken', 'public.key');
 

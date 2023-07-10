@@ -1,7 +1,8 @@
+import { axiosPrivate } from "@/hooks/useAxiosPrivate";
 import { SendOtpProps, verifyOtpProps } from "@/types";
 import axios, { InternalAxiosRequestConfig } from "axios";
 
-const baseURL = "http://localhost:5000/api/";
+const baseURL = "http://localhost:5000/api/v1/";
 
 const publicClient = axios.create({
   baseURL: baseURL,
@@ -38,7 +39,11 @@ publicClient.interceptors.response.use(
 export function sendOtp<T extends object>(data: T) {
   return publicClient.post("/auth/login", data);
 }
-export const verifyOtp = (T: verifyOtpProps) =>
-  publicClient.post("/auth/verify-otp", T);
+export function verifyOtp<T extends object>(data: T) {
+  return publicClient.post("/auth/verify-otp", data);
+}
+export function getInfo() {
+  return axiosPrivate.get("/auth/verify-otp");
+}
 
 export default publicClient;

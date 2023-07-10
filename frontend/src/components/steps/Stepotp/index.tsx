@@ -10,8 +10,9 @@ import { RootState } from "@/store";
 import { toast } from "react-toastify";
 import { sendOtp, verifyOtp } from "@/axios/axiosPublic.client";
 import { SendOtpProps, verifyOtpProps, verifySliceInitialProps } from "@/types";
-import { setUser } from "@/store/slices/auth";
+import { setAccessToken, setUser } from "@/store/slices/auth";
 import { setVerify } from "@/store/slices/verify";
+import userApi from "@/axios/modules/user.api";
 
 const StepOtp = () => {
   const [otp, setOtp] = useState<string>("");
@@ -19,9 +20,6 @@ const StepOtp = () => {
   const verify = useSelector<RootState>(
     (state) => state.verify
   ) as verifySliceInitialProps;
-  console.log(otp);
-
-  console.log(otp);
 
   const router = useRouter();
 
@@ -45,7 +43,7 @@ const StepOtp = () => {
 
     try {
       const response = await sendOtp<SendOtpProps>({ email });
-      console.log(response);
+
       const { data, message } = response.data;
 
       dispatch(
@@ -63,17 +61,23 @@ const StepOtp = () => {
 
   const otpsubmitHandler = async () => {
     if (!otp) return toast.error("Enter your valid otp ");
-    try {
-      const response = await verifyOtp({
-        email: verify.email,
-        hash: verify.hash,
-        otp: Number(otp),
-      });
+
+    const { response, err } = await userApi.verifyEmail<verifyOtpProps>({
+      email: verify.email,
+      hash: verify.hash,
+      otp: Number(otp),
+    });
+
+    if (response) {
       const { data, message } = response.data;
-      console.log(response);
+
       dispatch(
         setUser({
           user: data.user,
+        })
+      );
+      dispatch(
+        setAccessToken({
           accessToken: data.accessToken,
         })
       );
@@ -84,17 +88,16 @@ const StepOtp = () => {
           hash: "",
         })
       );
-
       toast.success(message);
       router.push("/setup");
-    } catch (err) {
-      console.log(err);
-      toast.error(err.response.data.message[0].error);
+    }
+    if (err) {
+      toast.error(err.response.data.message);
     }
   };
   return (
     <div className="cardWrapper">
-      <Card  title="Enter the code we just texted you" icon="lock-emoji">
+      <Card title="Enter the code we just texted you" icon="lock-emoji">
         <OtpInput value={otp} onChange={onChange} valueLength={6} />
         <span className={styles.reSendOtp}>
           Didn’t receive? <span onClick={resendOtp}> Tap to resend</span>

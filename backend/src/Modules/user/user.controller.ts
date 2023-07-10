@@ -1,8 +1,8 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import Api from 'lib/api';
 import { UserService } from './user.service';
-import { CustomRequest } from 'interfaces/request.interface';
-import { DecodedToken as user } from 'utils';
+import { HttpExceptionError } from 'exceptions/http.exception';
+import { globalConstants } from 'lib/constants';
 
 export class UserController extends Api {
   private readonly userServie: UserService;
@@ -11,10 +11,16 @@ export class UserController extends Api {
     this.userServie = new UserService();
   }
 
-  public getMyProfileHandler: RequestHandler = async (req: CustomRequest<user>, res: Response, next: NextFunction) => {
+  public getMyProfileHandler: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userId = req.user.userId;
-      const user = await this.userServie.getProfile(userId);
+      if (!req.user) {
+        throw new HttpExceptionError(
+          globalConstants.statusCode.UnauthorizedException.code,
+          ' Unauthorized login first !',
+        );
+      }
+      const user = await this.userServie.getProfile(req.user.userId);
+      this.send(res, user, 'Your profile details');
     } catch (err) {
       next(err);
     }

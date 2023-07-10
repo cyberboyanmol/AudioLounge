@@ -11,7 +11,7 @@
 }
 
 .input::placeholder {
-  color: var(--secondaryTextColor);
+  color: var(--placeholderColor);
 }
 .customInput {
   width: 100%;

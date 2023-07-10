@@ -1,28 +1,25 @@
 import { useDispatch } from "react-redux";
 import axios from "../axios/axiosPublic.client";
-import { setUser } from "@/store/slices/auth";
+import { setAccessToken, setUser } from "@/store/slices/auth";
 import { authSliceInitialProps } from "@/types";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 
 const useRefreshToken = () => {
   const dispatch = useDispatch();
-  const user = useSelector<RootState, authSliceInitialProps["user"]>(
-    (state) => state.auth.user
-  );
+  const auth = useSelector<RootState>((state) => state.auth);
+
   const refresh = async () => {
-    const response = await axios.get("/refresh", {
+    const response = await axios.get("/auth/refresh-token", {
       withCredentials: true,
     });
 
     dispatch(
-      setUser({
-        user,
-        accessToken: response.data.accessToken,
+      setAccessToken({
+        accessToken: response.data.data.accessToken,
       })
     );
-
-    return response.data.accessToken;
+    return response.data.data.accessToken;
   };
   return refresh;
 };

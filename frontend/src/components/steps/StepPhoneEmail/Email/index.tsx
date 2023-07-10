@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import verify, { setVerify } from "@/store/slices/verify";
 import { SendOtpProps, verifyOtpProps } from "@/types";
 import { sendOtp } from "@/axios/axiosPublic.client";
+import userApi from "@/axios/modules/user.api";
 
 const Email: React.FC<StepProps> = ({ onNext }) => {
   const [email, setEmail] = useState("");
@@ -34,11 +35,10 @@ const Email: React.FC<StepProps> = ({ onNext }) => {
       return;
     }
 
-    try {
-      const response = await sendOtp<SendOtpProps>({ email });
-      console.log(response);
-      const { data, message } = response.data;
+    const { response, err } = await userApi.login<SendOtpProps>({ email });
 
+    if (response) {
+      const { data, message } = response.data;
       dispatch(
         setVerify({
           email: data.email,
@@ -46,14 +46,20 @@ const Email: React.FC<StepProps> = ({ onNext }) => {
         })
       );
       toast.success(message);
-
       onNext();
-    } catch (err) {
-      console.log(err);
+    }
+    if (err) {
       toast.error(err.response.data.message[0].error);
     }
   };
 
+  const onKeyDownHandler: React.KeyboardEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    if (event.key === "Enter" && event.keyCode === 13) {
+      SignInWithEmailHandler();
+    }
+  };
   return (
     <Card title="Enter Your email id " icon="email-emoji">
       <TextInput
@@ -62,6 +68,7 @@ const Email: React.FC<StepProps> = ({ onNext }) => {
         type="email"
         onChange={(e) => setEmail(e.target.value)}
         placeholder="robin@gmail.com"
+        onKeyDown={onKeyDownHandler}
       />{" "}
       <p className={styles.bottomParagraph}>
         we will send you a One Time Password on your mail.

@@ -34,7 +34,6 @@ export class App {
 
     this.app.use(
       cors({
-        optionsSuccessStatus: 200,
         origin: getConfig().allowedOrigins,
         credentials: true,
       }),
@@ -46,7 +45,7 @@ export class App {
 
   private initializeRoutes(routes: Route[]) {
     routes.forEach((route) => {
-      this.app.use('/api', route.router);
+      this.app.use('/api/v1', route.router);
     });
   }
 
