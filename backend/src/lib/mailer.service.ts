@@ -4,14 +4,15 @@ import ejs from 'ejs';
 import Mail from 'nodemailer/lib/mailer';
 import { logger } from './logger';
 import { sendMail } from '../interfaces/sendmail.interface';
+import { getConfig } from 'config';
 export class MailService {
   private transporter;
   constructor() {
     this.transporter = nodemailer.createTransport({
-      service: process.env.SMTP_SERVICE as string,
+      service: getConfig().SMTP_SERVICE as string,
       auth: {
-        user: process.env.SMTP_SERVICE_EMAIL as string,
-        pass: process.env.SMTP_SERVICE_PASSWORD as string,
+        user: getConfig().SMTP_SERVICE_EMAIL as string,
+        pass: getConfig().SMTP_SERVICE_PASSWORD as string,
       },
     });
   }
@@ -21,10 +22,9 @@ export class MailService {
       const templatePath = path.resolve(__dirname, '..', 'templates', `${templateName}`, `${templateName}.ejs`);
 
       const mailBody: string = await ejs.renderFile(templatePath, templateData);
-      logger.info(mailBody);
 
       const mailOptions: Mail.Options = {
-        from: `Audio Lounge ${EventType} ${process.env.SMTP_SERVICE_EMAIL}` as string,
+        from: `Audio Lounge ${EventType} ${getConfig().SMTP_SERVICE_EMAIL}` as string,
         to: recipientEmail,
         subject: subject,
         html: mailBody,

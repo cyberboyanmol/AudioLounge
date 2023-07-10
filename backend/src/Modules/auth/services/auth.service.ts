@@ -5,6 +5,7 @@ import { sendMail } from '../../../interfaces/sendmail.interface';
 import { logger } from '../../../lib/logger';
 import { VerifyOtpDto } from '../dtos/verifyotp.dto';
 import { OtpService } from '../../../utils';
+import { getConfig } from 'config';
 
 export class AuthService {
   private readonly prisma = prisma;
@@ -21,7 +22,7 @@ export class AuthService {
     const newotp = await this.OtpService.otpGenerator();
 
     // otp expiration time
-    const expireIn = 1000 * 60 * 5;
+    const expireIn = getConfig().OTP_EXPIRE_IN_TIME;
 
     const expireTime = Date.now() + expireIn;
 
@@ -46,7 +47,7 @@ export class AuthService {
     return { email, hash: `${otphashed}.${expireTime}` };
   }
 
-  public async createNewAccount({ email, hash, otp }: VerifyOtpDto) {
+  public async createNewAccount({ email }: VerifyOtpDto) {
     const newUser = await this.prisma.user.create({
       data: {
         email: email,
