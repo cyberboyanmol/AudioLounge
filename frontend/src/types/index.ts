@@ -4,7 +4,7 @@ export type authSliceInitialProps = {
     userId?: string;
     email?: string;
     name?: string;
-    avatar?: null;
+    avatar?: string;
     googleId?: string;
     activated?: boolean;
     provider?: provider;
@@ -21,7 +21,7 @@ export type GlobalUiStateProps = {
   loading: boolean;
 };
 
-enum provider {
+export enum provider {
   LOCAL,
   GOOGLE,
 }

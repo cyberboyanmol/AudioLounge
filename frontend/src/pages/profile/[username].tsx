@@ -1,7 +1,11 @@
+import { useRouter } from "next/router";
 import React from "react";
 
 const UserProfile = () => {
-  return <div>dfdf</div>;
+  const router = useRouter();
+  const { username } = router.query;
+
+  return <div>{`${username}`}</div>;
 };
 
 export default UserProfile;

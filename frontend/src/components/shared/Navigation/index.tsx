@@ -6,23 +6,50 @@ import { GiMicrophone, MdOutlineLogout } from "@/utils";
 import { motion } from "framer-motion";
 
 import { useRouter } from "next/router";
-import { RootState } from "@/store";
+import { RootState, persistor } from "@/store";
 import { useSelector } from "react-redux";
+import { axiosPrivate } from "@/hooks/useAxiosPrivate";
+import { userEndpoint } from "@/axios/modules/user.api";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { resetUser } from "@/store/slices/auth";
+import { setAccessToken } from "@/store/slices/accessToken";
 
 const Navigation = () => {
   const user = "/images/monkey-avatar.png";
   const router = useRouter();
+  const dispatch = useDispatch();
   const isHome = router.pathname === "/";
   const [isOpen, setIsOpen] = useState(false);
 
   const isAuthenticated = useSelector<RootState>(
     (state) => state.auth.user.activated
   ) as boolean;
+  const userId = useSelector<RootState>(
+    (state) => state.auth.user.userId
+  ) as string;
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  const LogoutHandler = () => {};
+  const LogoutHandler = async () => {
+    try {
+      const response = await axiosPrivate.get(userEndpoint.logout);
+      toast.success("response.data.data.message");
+      console.log(response.data.data);
+      dispatch(resetUser());
+      localStorage.clear();
+      await persistor.purge();
+      dispatch(
+        setAccessToken({
+          accessToken: "",
+        })
+      );
+      router.replace("/login");
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <nav className={`${styles.navbar} container`}>
@@ -49,10 +76,10 @@ const Navigation = () => {
               exit={{ opacity: 0, scale: 0.3 }}
               className={styles.userProfileRight}
             >
-              <Link href="/my-pofile" className={styles.myProfile}>
+              <Link href={`/profile/${userId}`} className={styles.myProfile}>
                 My profile
               </Link>
-              <span className={styles.logoutBtn} onClick={logoutUser}>
+              <span className={styles.logoutBtn} onClick={LogoutHandler}>
                 <> Logout</> <MdOutlineLogout />
               </span>
             </motion.div>

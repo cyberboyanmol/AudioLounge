@@ -25,7 +25,7 @@ export class AuthController extends Api {
     try {
       const response = await this.AuthService.signUpWithEmail(req.body);
 
-      this.send(res, response, `Otp send successfully to your ${req.body.email} `);
+      this.send(res, response, `Otp sent successfully to your ${req.body.email} `);
     } catch (err) {
       next(err);
     }

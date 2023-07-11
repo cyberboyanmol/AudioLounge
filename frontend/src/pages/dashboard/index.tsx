@@ -7,14 +7,14 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const Dashboard: NextPage = () => {
-  const user = useSelector<RootState>(
+  const user = useSelector<RootState, authSliceInitialProps["user"]>(
     (state) => state.auth.user
-  ) as authSliceInitialProps;
+  );
 
   return (
     <>
       <h1>Dashboard</h1>
-      <p>{`${user}`}</p>
+      <p>{`${user.userId}`}</p>
     </>
   );
 };

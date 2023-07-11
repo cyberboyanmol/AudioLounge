@@ -1,4 +1,4 @@
-import { authSliceInitialProps } from "@/types";
+import { authSliceInitialProps, provider } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PURGE } from "redux-persist";
 
@@ -13,6 +13,7 @@ const authSlice = createSlice({
     setUser: (state, action: PayloadAction<authSliceInitialProps>) => {
       state.user = action.payload.user;
     },
+
     resetUser: (state) => {
       state.user = {};
     },

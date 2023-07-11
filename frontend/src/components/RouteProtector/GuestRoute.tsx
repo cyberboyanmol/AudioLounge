@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-const GuestRoute = (WrappedComponent) => {
-  const Auth = (props) => {
+const GuestRoute = (WrappedComponent: JSX.Element) => {
+  const Auth = (props: JSX.Element) => {
     const router = useRouter();
 
     const userId = useSelector((state: RootState) => state.auth.user.userId);
