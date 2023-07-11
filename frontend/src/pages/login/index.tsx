@@ -1,4 +1,5 @@
 import { StepPhoneEmail, Stepotp } from "@/components";
+import GuestRoute from "@/components/RouteProtector/GuestRoute";
 import { StepProps } from "@/components/steps/StepPhoneEmail";
 import Email from "@/components/steps/StepPhoneEmail/Email";
 import Phone from "@/components/steps/StepPhoneEmail/Phone";
@@ -28,4 +29,4 @@ const Login: NextPage = () => {
   return <Step onNext={onNext} onPrevious={onPrevious} />;
 };
 
-export default Login;
+export default GuestRoute(Login);

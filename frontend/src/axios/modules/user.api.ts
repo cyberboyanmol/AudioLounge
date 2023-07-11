@@ -6,6 +6,7 @@ export const userEndpoint = {
   verifyEmail: "/auth/verify",
   getInfo: "/user/me",
   updateUser: "/user/activate",
+  logout: "/auth/logout",
 };
 
 const userApi = {

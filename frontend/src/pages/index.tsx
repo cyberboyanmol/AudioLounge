@@ -9,7 +9,6 @@ import { SiMinutemailer } from "react-icons/si";
 
 import { useRouter } from "next/router";
 import { Button, Card } from "@/components";
-import GuestRoute from "@/components/ProtectedPage/GuestRoute";
 const Home = () => {
   const router = useRouter();
   const startRegister = () => {
@@ -80,4 +79,4 @@ const Home = () => {
   );
 };
 
-export default GuestRoute(Home);
+export default Home;

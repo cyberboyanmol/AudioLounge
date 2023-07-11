@@ -1,3 +1,4 @@
+import SemiProtectedRoute from "@/components/RouteProtector/SemiProtected";
 import StepAvatar from "@/components/steps/StepAvatar";
 import StepName from "@/components/steps/StepName";
 import { StepProps } from "@/components/steps/StepPhoneEmail";
@@ -30,4 +31,4 @@ const SetupProfile: NextPage = () => {
   );
 };
 
-export default SetupProfile;
+export default SemiProtectedRoute(SetupProfile);

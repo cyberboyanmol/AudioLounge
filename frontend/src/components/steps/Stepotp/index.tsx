@@ -8,9 +8,9 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { toast } from "react-toastify";
-import { sendOtp, verifyOtp } from "@/axios/axiosPublic.client";
+import { sendOtp } from "@/axios/axiosPublic.client";
 import { SendOtpProps, verifyOtpProps, verifySliceInitialProps } from "@/types";
-import { setAccessToken, setUser } from "@/store/slices/auth";
+import { setUser } from "@/store/slices/auth";
 import { setVerify } from "@/store/slices/verify";
 import userApi from "@/axios/modules/user.api";
 import { StepProps } from "../StepPhoneEmail";
@@ -19,6 +19,7 @@ import {
   buttonExternalStyle,
   externalStylePrevious,
 } from "@/utils";
+import { setAccessToken } from "@/store/slices/accessToken";
 
 const StepOtp: React.FC<StepProps> = ({ onPrevious }) => {
   const [otp, setOtp] = useState<string>("");

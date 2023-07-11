@@ -11,7 +11,14 @@ export type authSliceInitialProps = {
     updatedAt?: Date;
     createdAt?: Date;
   };
+};
+
+export type accessTokenProps = {
   accessToken: string;
+};
+
+export type GlobalUiStateProps = {
+  loading: boolean;
 };
 
 enum provider {

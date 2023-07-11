@@ -1,31 +1,29 @@
 import { authSliceInitialProps } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PURGE } from "redux-persist";
 
 const authState: authSliceInitialProps = {
   user: {},
-  accessToken: "",
 };
 
 const authSlice = createSlice({
   name: "authSlice",
   initialState: authState,
   reducers: {
-    setUser: (
-      state,
-      action: PayloadAction<Omit<authSliceInitialProps, "accessToken">>
-    ) => {
+    setUser: (state, action: PayloadAction<authSliceInitialProps>) => {
       state.user = action.payload.user;
     },
-
-    setAccessToken: (
-      state,
-      action: PayloadAction<Omit<authSliceInitialProps, "user">>
-    ) => {
-      state.accessToken = action.payload.accessToken;
+    resetUser: (state) => {
+      state.user = {};
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(PURGE, (state) => {
+      state.user = {};
+    });
   },
 });
 
-export const { setUser, setAccessToken } = authSlice.actions;
+export const { setUser, resetUser } = authSlice.actions;
 
 export default authSlice.reducer;
