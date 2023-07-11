@@ -96,7 +96,9 @@ const StepOtp: React.FC<StepProps> = ({ onPrevious }) => {
         })
       );
       toast.success(message);
-      router.push("/setup");
+      if (data.user.activated) {
+        router.push("/dashboard");
+      }
     }
     if (err) {
       toast.error(err.response.data.message);

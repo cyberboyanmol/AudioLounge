@@ -6,7 +6,6 @@ import { GiMicrophone, MdOutlineLogout } from "@/utils";
 import { motion } from "framer-motion";
 
 import { useRouter } from "next/router";
-<<<<<<< HEAD
 import { RootState, persistor } from "@/store";
 import { useSelector } from "react-redux";
 import { axiosPrivate } from "@/hooks/useAxiosPrivate";
@@ -15,32 +14,22 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { resetUser } from "@/store/slices/auth";
 import { setAccessToken } from "@/store/slices/accessToken";
-=======
-import { RootState } from "@/store";
-import { useSelector } from "react-redux";
->>>>>>> c246de5b8846262b3e902dda03000d637286fcdc
+import { authSliceInitialProps } from "@/types";
 
 const Navigation = () => {
-  const user = "/images/monkey-avatar.png";
   const router = useRouter();
   const dispatch = useDispatch();
   const isHome = router.pathname === "/";
   const [isOpen, setIsOpen] = useState(false);
 
-  const isAuthenticated = useSelector<RootState>(
-    (state) => state.auth.user.activated
-  ) as boolean;
-<<<<<<< HEAD
-  const userId = useSelector<RootState>(
-    (state) => state.auth.user.userId
-  ) as string;
-=======
->>>>>>> c246de5b8846262b3e902dda03000d637286fcdc
+  const user = useSelector<RootState, authSliceInitialProps["user"]>(
+    (state) => state.auth.user
+  );
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-<<<<<<< HEAD
   const LogoutHandler = async () => {
     try {
       const response = await axiosPrivate.get(userEndpoint.logout);
@@ -59,9 +48,6 @@ const Navigation = () => {
       console.error(err);
     }
   };
-=======
-  const LogoutHandler = () => {};
->>>>>>> c246de5b8846262b3e902dda03000d637286fcdc
 
   return (
     <nav className={`${styles.navbar} container`}>
@@ -69,12 +55,12 @@ const Navigation = () => {
         <GiMicrophone className={styles.logo} />
         <span className={styles.brandName}>AudioLounge</span>
       </Link>
-      {isAuthenticated && (
+      {user.activated && (
         <div className={styles.userProfile} onClick={toggleMenu}>
           <div className={styles.userProfileLEft}>
-            <h3 className={styles.h3}>Anmol Gangwar</h3>
+            <h3 className={styles.h3}>{user.name}</h3>
             <Image
-              src={user ? user : "/images/monkey-avatar.png"}
+              src={user ? user.avatar : "/images/monkey-avatar.png"}
               width={40}
               height={40}
               className={styles.Avatar}
@@ -88,7 +74,7 @@ const Navigation = () => {
               exit={{ opacity: 0, scale: 0.3 }}
               className={styles.userProfileRight}
             >
-              <Link href={`/profile/${userId}`} className={styles.myProfile}>
+              <Link href={`/profile/${user.userId}`} className={styles.myProfile}>
                 My profile
               </Link>
               <span className={styles.logoutBtn} onClick={LogoutHandler}>
@@ -99,7 +85,7 @@ const Navigation = () => {
         </div>
       )}
 
-      {!isAuthenticated && isHome && (
+      {!user.activated && isHome && (
         <Link href={"/login"} className={styles.getStarted}>
           Get Started
         </Link>
