@@ -8,12 +8,15 @@ import { setUser } from "@/store/slices/auth";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { authSliceInitialProps } from "@/types";
+import { setLoading } from "@/store/slices/uiSlice";
+import { useRouter } from "next/router";
 
 export type MainLayoutProps = {
   children: React.ReactNode;
 };
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const dispatch = useDispatch();
+
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
@@ -21,6 +24,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     const controller = new AbortController();
     const currentUser = async () => {
       try {
+        dispatch(setLoading({ loading: true }));
+
         const response = await axiosPrivate.get(userEndpoint.getInfo);
 
         const { data } = response.data;
@@ -30,8 +35,10 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             user: data.user,
           })
         );
+        dispatch(setLoading({ loading: false }));
       } catch (err) {
         console.log(err);
+        dispatch(setLoading({ loading: false }));
       }
     };
     currentUser();

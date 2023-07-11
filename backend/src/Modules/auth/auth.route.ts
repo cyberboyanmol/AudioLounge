@@ -6,6 +6,7 @@ import { AuthDto } from './dtos/auth.dto';
 import { VerifyOtpDto } from './dtos/verifyotp.dto';
 import { GoogleController } from './controllers/google.controller';
 import { RefreshAccessToken } from './controllers/refreshAccessToken.controller';
+import { isAuthenticated } from 'middlewares/auth.middleware';
 
 export class AuthRoute implements Route {
   public readonly path = '/auth';
@@ -24,7 +25,7 @@ export class AuthRoute implements Route {
     this.router.get(`${this.path}/refresh-token`, this.refreshAccessToken.refreshAccessTokenHandler);
     // google route
 
-    this.router.get(`${this.path}/logout`, this.authController.logoutHandler);
+    this.router.get(`${this.path}/logout`, isAuthenticated, this.authController.logoutHandler);
 
     this.router.get(`${this.path}/google`, this.googleController.signInWithgoogle);
   }

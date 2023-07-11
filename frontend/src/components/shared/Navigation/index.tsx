@@ -1,28 +1,28 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Navigation.module.css";
 import { GiMicrophone, MdOutlineLogout } from "@/utils";
 import { motion } from "framer-motion";
 
 import { useRouter } from "next/router";
+import { RootState } from "@/store";
+import { useSelector } from "react-redux";
 
 const Navigation = () => {
   const user = "/images/monkey-avatar.png";
   const router = useRouter();
   const isHome = router.pathname === "/";
   const [isOpen, setIsOpen] = useState(false);
-  const isAuthenticated = false;
+
+  const isAuthenticated = useSelector<RootState>(
+    (state) => state.auth.user.activated
+  ) as boolean;
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-  const logoutUser = async () => {
-    try {
-      router.push("/");
-    } catch (err) {
-      console.error(err);
-    }
-  };
+
+  const LogoutHandler = () => {};
 
   return (
     <nav className={`${styles.navbar} container`}>
@@ -59,7 +59,7 @@ const Navigation = () => {
           )}
         </div>
       )}
-      <div></div>
+
       {!isAuthenticated && isHome && (
         <Link href={"/login"} className={styles.getStarted}>
           Get Started

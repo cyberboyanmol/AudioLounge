@@ -15,7 +15,7 @@ export const axiosPrivate = axios.create({
 });
 
 const useAxiosPrivate = () => {
-  const accessToken = useSelector<RootState>((state) => state.auth.accessToken);
+  const accessToken = useSelector<RootState>((state) => state.accessToken.accessToken);
 
   const isRefreshing = useRef(false);
   const failedQueue = useRef([]);

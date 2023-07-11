@@ -53,7 +53,7 @@ export class UserController extends Api {
         EventType: '',
       };
       this.mailService.sendMail(mailData);
-      this.send(res, updateUser, 'Infomation update successfully');
+      this.send(res, updateUser, 'Your profile successfully activated');
     } catch (err) {
       next(err);
     }

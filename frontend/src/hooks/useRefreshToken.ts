@@ -1,25 +1,39 @@
 import { useDispatch } from "react-redux";
 import axios from "../axios/axiosPublic.client";
-import { setAccessToken, setUser } from "@/store/slices/auth";
+import { resetUser, setUser } from "@/store/slices/auth";
 import { authSliceInitialProps } from "@/types";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store";
+import { RootState, persistor } from "@/store";
+import { setLoading } from "@/store/slices/uiSlice";
+import { setAccessToken } from "@/store/slices/accessToken";
+import { useRouter } from "next/router";
 
 const useRefreshToken = () => {
   const dispatch = useDispatch();
-  const auth = useSelector<RootState>((state) => state.auth);
+  const router = useRouter();
 
   const refresh = async () => {
-    const response = await axios.get("/auth/refresh-token", {
-      withCredentials: true,
-    });
-
-    dispatch(
-      setAccessToken({
-        accessToken: response.data.data.accessToken,
-      })
-    );
-    return response.data.data.accessToken;
+    try {
+      dispatch(setLoading({ loading: true }));
+      const response = await axios.get("/auth/refresh-token", {
+        withCredentials: true,
+      });
+      dispatch(
+        setAccessToken({
+          accessToken: response.data.data.accessToken,
+        })
+      );
+      dispatch(setLoading({ loading: false }));
+      return response.data.data.accessToken;
+    } catch (error) {
+      if (error.response.status === 401) {
+        dispatch(resetUser());
+        localStorage.clear();
+        await persistor.purge();
+        router.replace("/login");
+      }
+      return error;
+    }
   };
   return refresh;
 };
