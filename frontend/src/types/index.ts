@@ -21,7 +21,11 @@ export type GlobalUiStateProps = {
   loading: boolean;
 };
 
+<<<<<<< HEAD
 export enum provider {
+=======
+enum provider {
+>>>>>>> c246de5b8846262b3e902dda03000d637286fcdc
   LOCAL,
   GOOGLE,
 }

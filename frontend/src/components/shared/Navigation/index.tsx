@@ -6,6 +6,7 @@ import { GiMicrophone, MdOutlineLogout } from "@/utils";
 import { motion } from "framer-motion";
 
 import { useRouter } from "next/router";
+<<<<<<< HEAD
 import { RootState, persistor } from "@/store";
 import { useSelector } from "react-redux";
 import { axiosPrivate } from "@/hooks/useAxiosPrivate";
@@ -14,6 +15,10 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { resetUser } from "@/store/slices/auth";
 import { setAccessToken } from "@/store/slices/accessToken";
+=======
+import { RootState } from "@/store";
+import { useSelector } from "react-redux";
+>>>>>>> c246de5b8846262b3e902dda03000d637286fcdc
 
 const Navigation = () => {
   const user = "/images/monkey-avatar.png";
@@ -25,13 +30,17 @@ const Navigation = () => {
   const isAuthenticated = useSelector<RootState>(
     (state) => state.auth.user.activated
   ) as boolean;
+<<<<<<< HEAD
   const userId = useSelector<RootState>(
     (state) => state.auth.user.userId
   ) as string;
+=======
+>>>>>>> c246de5b8846262b3e902dda03000d637286fcdc
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+<<<<<<< HEAD
   const LogoutHandler = async () => {
     try {
       const response = await axiosPrivate.get(userEndpoint.logout);
@@ -50,6 +59,9 @@ const Navigation = () => {
       console.error(err);
     }
   };
+=======
+  const LogoutHandler = () => {};
+>>>>>>> c246de5b8846262b3e902dda03000d637286fcdc
 
   return (
     <nav className={`${styles.navbar} container`}>

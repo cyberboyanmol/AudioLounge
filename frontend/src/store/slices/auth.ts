@@ -13,7 +13,6 @@ const authSlice = createSlice({
     setUser: (state, action: PayloadAction<authSliceInitialProps>) => {
       state.user = action.payload.user;
     },
-
     resetUser: (state) => {
       state.user = {};
     },
