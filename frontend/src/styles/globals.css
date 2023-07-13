@@ -1,97 +1,27 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap");
-* {
-  margin: 0px;
-  padding: 0px;
-  box-sizing: border-box;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --primaryBgColor: #121212;
-  --secondaryBgColor: #1d1d1d;
-  --primaryTextColor: #ffffff;
-  --secondaryTextColor: #c4c5c5;
-  --blueColor: #0077ff;
-  --linearGradient: linear-gradient(to right, #ff00cc, #3333ff);
-  --indigoColor: #5453e0;
-  --primaryBg2Color: #181629;
-  --secondaryBg2Color: #25223f;
-  --placeholderColor: #454545;
-  --inputColor: #262626;
-  --successColor: #20bd5f;
-  --dangerColor: #f44336;
-  --pinkColor: #e91e63;
-  --pinkColor1: #ff00cc;
-  --lineColor: #323232;
-}
-html {
-  font-size: calc(14px + 0.2vw);
-}
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-ol,
-ul {
-  font-weight: normal;
-  -webkit-font-smoothing: antialiased;
-}
-a {
-  text-decoration: none;
-}
-ol,
-ul {
-  list-style: none;
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-button {
-  border: none;
-  outline: none;
-  cursor: pointer;
-  font-weight: bold;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
 }
 
 body {
-  background: var(--primaryBgColor);
-  font-family: "Nunito", sans-serif;
-  color: #fff;
-}
-
-.container {
-  width: 1280px;
-  max-width: 95%;
-  margin: 0 auto;
-}
-
-.cardWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: calc(100vh - 140px);
-}
-
-/* @media screen and (min-width: 425px) {
-  html {
-    font-size: calc(16px + 0.2vw);
-  }
-}
-@media screen and (min-width: 768px) {
-  html {
-    font-size: calc(13px + 0.2vw);
-  }
-} */
-
-.actionButtonWrap {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
 }
