@@ -24,7 +24,7 @@ const Button: React.FC<ButtonProps> = ({
       innerBackgroundColor = `bg-primaryBgColor`;
       break;
     case "secondary":
-      backgroundColor = ``;
+      backgroundColor = `bg-primaryBgColor text-primaryTextColor `;
       break;
 
     default:

@@ -1,5 +1,5 @@
 import SetupLayout from "@/components/layouts/setupLayout";
-import { StepEmail, StepOtp } from "@/components/steps";
+import { StepAvatar, StepName } from "@/components/steps";
 import { StepProps } from "@/types";
 import React, { useState } from "react";
 
@@ -8,11 +8,11 @@ export type loginStepsProps = {
 };
 
 const steps: loginStepsProps = {
-  1: StepEmail,
-  2: StepOtp,
+  1: StepName,
+  2: StepAvatar,
 };
 
-const Login = () => {
+const Setup = () => {
   const [step, setStep] = useState<number>(1);
   const Step = steps[step];
 
@@ -29,4 +29,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Setup;

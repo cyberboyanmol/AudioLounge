@@ -30,7 +30,7 @@ const Email: React.FC<StepProps> = ({ onNext }) => {
     //     })
     //   );
     //   toast.success(message);
-    //   onNext();
+    onNext();
     // }
     // if (err) {
     //   toast.error(err.response.data.message[0].error);
