@@ -1,11 +1,11 @@
-import { MailService } from '../../../lib/mailer.service';
-import prisma from '../../../lib/prisma-client';
+import { MailService } from '@/lib/mailer.service';
+import prisma from '@/lib/prisma-client';
 import { AuthDto } from '../dtos/auth.dto';
-import { sendMail } from '../../../interfaces/sendmail.interface';
-import { logger } from '../../../lib/logger';
+import { sendMail } from '@/interfaces/sendmail.interface';
+import { logger } from '@/lib/logger';
 import { VerifyOtpDto } from '../dtos/verifyotp.dto';
-import { OtpService } from '../../../utils';
-import { getConfig } from 'config';
+import { OtpService } from '@/utils';
+import { getConfig } from '@/config';
 
 export class AuthService {
   private readonly prisma = prisma;

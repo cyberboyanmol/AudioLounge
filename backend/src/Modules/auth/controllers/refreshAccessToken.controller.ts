@@ -1,12 +1,12 @@
-import { HttpExceptionError } from '../../../exceptions/http.exception';
+import { HttpExceptionError } from '@/exceptions/http.exception';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
-import Api from '../../../lib/api';
-import { globalConstants } from '../../../lib/constants';
+import Api from '@/lib/api';
+import { globalConstants } from '@/lib/constants';
 import { RefreshAccessTokenService } from '../services/refreshAccessToken.service';
-import { Payload, setAccessToken, setRefreshToken, verifyRefreshToken } from 'utils';
+import { Payload, setAccessToken, setRefreshToken, verifyRefreshToken } from '@/utils';
 import { AuthService } from '../services/auth.service';
-import { getConfig } from '../../../config';
-import { logger } from 'lib/logger';
+import { getConfig } from '@/config';
+import { logger } from '@/lib/logger';
 
 export class RefreshAccessToken extends Api {
   private readonly RefreshAccessTokenService: RefreshAccessTokenService;

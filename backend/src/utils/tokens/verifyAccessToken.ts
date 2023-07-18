@@ -2,10 +2,10 @@ import { Response, NextFunction, Request } from 'express';
 import jwt, { SignOptions } from 'jsonwebtoken';
 import fs from 'fs';
 import path from 'path';
-import { DecodedToken } from 'utils';
-import { CustomResponse } from '../../interfaces';
-import { globalConstants } from '../../lib/constants';
-import { HttpExceptionError } from '../../exceptions/http.exception';
+import { DecodedToken } from '@/utils';
+import { CustomResponse } from '@/interfaces';
+import { globalConstants } from '@/lib/constants';
+import { HttpExceptionError } from '@/exceptions/http.exception';
 
 const publicAccessTokenKeyPath = path.resolve(__dirname, '..', '..', 'keys', 'accessToken', 'public.key');
 

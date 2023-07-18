@@ -1,7 +1,4 @@
-import { Router } from 'express';
-import prisma from '../../lib/prisma-client';
-import { UserWithRefresh } from 'modules/auth/interfaces';
-import { User } from '@prisma/client';
+import prisma from '@/lib/prisma-client';
 import { UpdateUserDto } from './dtos/updateUser.dto';
 
 export class UserService {
@@ -17,7 +14,7 @@ export class UserService {
         userId,
       },
       include: {
-        registeredRoom: true,
+        AttendeeInRoom: true,
         roomcreatedByme: true,
       },
     });

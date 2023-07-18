@@ -1,8 +1,8 @@
-import { logger } from '../lib/logger';
+import { logger } from '@/lib/logger';
 import type { NextFunction, Request, Response } from 'express';
-import { HttpExceptionError } from '../exceptions/http.exception';
-import { ValidationException } from '../exceptions/validation.exception';
-import { globalConstants } from '../lib/constants';
+import { HttpExceptionError } from '@/exceptions/http.exception';
+import { ValidationException } from '@/exceptions/validation.exception';
+import { globalConstants } from '@/lib/constants';
 
 interface validationError {
   error: string;

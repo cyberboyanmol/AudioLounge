@@ -3,8 +3,8 @@ import path from 'path';
 import ejs from 'ejs';
 import Mail from 'nodemailer/lib/mailer';
 import { logger } from './logger';
-import { sendMail } from '../interfaces/sendmail.interface';
-import { getConfig } from 'config';
+import { sendMail } from '@/interfaces/sendmail.interface';
+import { getConfig } from '@/config';
 export class MailService {
   private transporter;
   constructor() {

@@ -1,1 +1,1 @@
-export { verifyAccessToken as isAuthenticated } from 'utils';
+export { verifyAccessToken as isAuthenticated } from '@/utils';

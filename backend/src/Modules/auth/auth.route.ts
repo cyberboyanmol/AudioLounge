@@ -1,12 +1,12 @@
 import { AuthController } from './controllers/auth.controller';
 import { Router } from 'express';
-import type { Route } from '../../interfaces/route.interface';
-import { ValidationPipe } from '../../middlewares/request-validation.middleware';
+import type { Route } from '@/interfaces/route.interface';
+import { ValidationPipe } from '@/middlewares/request-validation.middleware';
 import { AuthDto } from './dtos/auth.dto';
 import { VerifyOtpDto } from './dtos/verifyotp.dto';
 import { GoogleController } from './controllers/google.controller';
 import { RefreshAccessToken } from './controllers/refreshAccessToken.controller';
-import { isAuthenticated } from 'middlewares/auth.middleware';
+import { isAuthenticated } from '@/middlewares/auth.middleware';
 
 export class AuthRoute implements Route {
   public readonly path = '/auth';

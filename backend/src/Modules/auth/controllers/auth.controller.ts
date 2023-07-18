@@ -1,13 +1,13 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
-import Api from '../../../lib/api';
+import Api from '@/lib/api';
 import { AuthService } from '../services/auth.service';
-import { HttpExceptionError } from '../../../exceptions/http.exception';
-import { globalConstants } from '../../../lib/constants';
+import { HttpExceptionError } from '@/exceptions/http.exception';
+import { globalConstants } from '@/lib/constants';
 import { OtpService, setAccessToken, setRefreshToken } from '../../../utils';
 import { User } from '@prisma/client';
-import { getConfig } from '../../../config';
+import { getConfig } from '@/config';
 import { RefreshAccessTokenService } from '../services/refreshAccessToken.service';
-import { logger } from '.../../lib/logger';
+import { logger } from '@/lib/logger';
 
 export class AuthController extends Api {
   private readonly AuthService: AuthService;

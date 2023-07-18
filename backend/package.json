@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=development tsx watch ./src/server.ts ",
-    "start": "yarn run build && cross-env NODE_ENV=production node dist/server.js",
+    "start": "yarn run build && cross-env NODE_ENV=production node -r ./tsconfig-paths.js  ./dist/server.js",
     "build": "yarn clean  &&  tsc && yarn copy-templates ",
     "clean": "rimraf dist/",
     "copy-templates": "copyfiles -u 1 src/templates/**/*.ejs  dist/ ",
@@ -37,6 +37,7 @@
     "morgan": "^1.10.0",
     "nodemailer": "^6.9.3",
     "prisma": "^4.16.2",
+    "tsconfig-paths": "^4.2.0",
     "winston": "^3.9.0"
   },
   "devDependencies": {

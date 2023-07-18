@@ -3,12 +3,12 @@ import express from 'express';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
-import type { Config } from './interfaces/config.interface';
-import { Route } from './interfaces/route.interface';
-import { getConfig } from './config';
-import { globalConstants } from './lib/constants';
-import { logger } from './lib/logger';
-import { errorMiddleware } from './middlewares/error.middleware';
+import type { Config } from '@/interfaces/config.interface';
+import { Route } from '@/interfaces/route.interface';
+import { getConfig } from '@/config';
+import { globalConstants } from '@/lib/constants';
+import { logger } from '@/lib/logger';
+import { errorMiddleware } from '@/middlewares/error.middleware';
 import http, { Server } from 'http';
 export class App {
   public app: express.Application;

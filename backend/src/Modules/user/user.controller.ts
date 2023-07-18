@@ -1,11 +1,11 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
-import Api from 'lib/api';
+import Api from '@/lib/api';
 import { UserService } from './user.service';
-import { HttpExceptionError } from 'exceptions/http.exception';
-import { globalConstants } from 'lib/constants';
-import { MailService } from 'lib/mailer.service';
-import { sendMail } from 'interfaces';
-import { logger } from 'lib/logger';
+import { HttpExceptionError } from '@/exceptions/http.exception';
+import { globalConstants } from '@/lib/constants';
+import { MailService } from '@/lib/mailer.service';
+import { sendMail } from '@/interfaces';
+import { logger } from '@/lib/logger';
 
 export class UserController extends Api {
   private readonly userServie: UserService;
@@ -33,7 +33,7 @@ export class UserController extends Api {
 
   public activateMyProfileHandler: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { activated } = req.body;
+      // const { activated } = req.body;
 
       const { userId } = req.user;
       const updateUser = await this.userServie.updateUser(userId, req.body);
