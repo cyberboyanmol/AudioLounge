@@ -1,4 +1,13 @@
 @tailwind base;
+*::-webkit-scrollbar {
+  /* width: 6px; */
+  display: none;
+}
+
+*::-webkit-scrollbar-track {
+  display: none;
+}
+
 @tailwind components;
 @tailwind utilities;
 
@@ -27,6 +36,7 @@
   --pinkColor1: #ff00cc;
   --lineColor: #323232;
 }
+
 html {
   font-size: calc(14px + 0.2vw);
 }
@@ -78,6 +88,9 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+.bglinearGradient2 {
+  background: linear-gradient(#2b2f53 100% #1d1c34 100%);
+}
 .container {
   width: 1280px;
   max-width: 95%;

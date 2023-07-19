@@ -36,6 +36,9 @@ module.exports = {
       fontFamily: {
         nunito: ["Nunito", "sans-serif"],
       },
+      boxShadow: {
+        "shadow-sidebar": "0 4px 4px rgba(0, 0, 0, 0.3)",
+      },
     },
   },
   plugins: [],

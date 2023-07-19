@@ -22,8 +22,8 @@ export type GlobalUiStateProps = {
 };
 
 export enum provider {
-  LOCAL,
-  GOOGLE,
+  LOCAL = "LOCAL",
+  GOOGLE = "GOOGLE",
 }
 
 export type verifySliceInitialProps = {

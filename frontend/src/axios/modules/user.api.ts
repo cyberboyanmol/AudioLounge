@@ -1,4 +1,4 @@
-import useAxiosPrivate, { axiosPrivate } from "@/hooks/useAxiosPrivate";
+// import useAxiosPrivate, { axiosPrivate } from "@/hooks/useAxiosPrivate";
 import publicClient from "../axiosPublic.client";
 
 export const userEndpoint = {

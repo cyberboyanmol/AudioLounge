@@ -14,7 +14,7 @@ export class UserService {
         userId,
       },
       include: {
-        AttendeeInRoom: true,
+        UserInRoom: true,
         roomcreatedByme: true,
       },
     });

@@ -20,48 +20,81 @@ model User {
   provider        Provider          @default(LOCAL)
   updatedAt       DateTime          @updatedAt @map(name: "updated_at")
   createdAt       DateTime          @default(now()) @map(name: "created_at")
-  roomcreatedByme EventRoom[]
-  SpeakerInRoom   SpeakerInRoom[]
+  roomcreatedByme Room[]
+  SpeakerInEvent  SpeakerInEvent[]
   refreshTokens   Refresh[]
-  AttendeeInRoom  AttendeeInRoom[]
+  UserInRoom      UserInRoom[]
   recordingSchema recordingSchema[]
+  AttendeeInEvent AttendeeInEvent[]
+  Event           Event[]
 }
 
-model EventRoom {
-  eventId      String       @id @unique @default(uuid())
-  topic        String
-  description  String?
-  roomCategory RoomCategory @default(SOCIAL)
-  roomType     RoomType
-  start_timing DateTime
-  created_At   DateTime     @default(now())
-  updated_At   DateTime     @updatedAt
-  creatorId    String?
-  creator      User?        @relation(fields: [creatorId], references: [userId])
-
-  SpeakerInRoom   SpeakerInRoom[]
-  AttendeeInRoom  AttendeeInRoom[]
-  recordingSchema recordingSchema[]
+model Room {
+  roomId      String       @id @unique @default(uuid())
+  roomname    String
+  roomBanner  String
+  roomLogo    String
+  description String?
+  roomType    RoomType     @default(PUBLIC)
+  created_at  DateTime     @default(now())
+  updated_at  DateTime     @updatedAt
+  creatorId   String?
+  creator     User?        @relation(fields: [creatorId], references: [userId])
+  UserInRoom  UserInRoom[]
+  Events      Event[]
 }
 
-model SpeakerInRoom {
-  speaker     User      @relation(fields: [speakerId], references: [userId])
+model Event {
+  eventId         String            @id @unique @default(uuid())
+  discussiontopic String
+  eventbanner     String
+  description     String?
+  EventRoom       Room?             @relation(fields: [EventroomId], references: [roomId])
+  creator         User?             @relation(fields: [creatorId], references: [userId])
+  creatorId       String            @unique
+  EventroomId     String            @unique
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @updatedAt
+  start_timing    DateTime
+  endTiming       DateTime?
+  tags            String[]
+  eventType       EventType         @default(PUBLIC)
+  eventcategory   eventCategory
+  attendeesCount  Int               @default(0)
+  SpeakerInEvent  SpeakerInEvent[]
+  recordingSchema recordingSchema[]
+  AttendeeInEvent AttendeeInEvent[]
+}
+
+model SpeakerInEvent {
+  speaker     User   @relation(fields: [speakerId], references: [userId])
   speakerId   String
-  eventroom   EventRoom @relation(fields: [eventroomId], references: [eventId])
+  eventroom   Event  @relation(fields: [eventroomId], references: [eventId])
   eventroomId String
 
   @@id([speakerId, eventroomId])
 }
 
-model AttendeeInRoom {
-  user        User      @relation(fields: [userId], references: [userId])
-  userId      String
-  isHost      Boolean
-  eventroom   EventRoom @relation(fields: [eventroomId], references: [eventId])
-  eventroomId String
-  socketId    String
+model UserInRoom {
+  user   User                @relation(fields: [userId], references: [userId])
+  userId String
+  room   Room                @relation(fields: [roomId], references: [roomId])
+  roomId String
+  roles  UserRoleInEventRoom
 
-  @@id([userId, eventroomId])
+  @@id([userId, roomId])
+}
+
+model AttendeeInEvent {
+  socketId String
+  user     User                @relation(fields: [userId], references: [userId])
+  userId   String              @unique()
+  isHost   Boolean
+  event    Event               @relation(fields: [eventId], references: [eventId])
+  eventId  String
+  roles    AttendeeRoleInEvent
+
+  @@id([userId, eventId])
 }
 
 model Refresh {
@@ -74,22 +107,27 @@ model Refresh {
 }
 
 model recordingSchema {
-  user          User      @relation(fields: [userId], references: [userId])
+  user          User     @relation(fields: [userId], references: [userId])
   userId        String
-  room          EventRoom @relation(fields: [roomId], references: [eventId])
+  room          Event    @relation(fields: [roomId], references: [eventId])
   roomId        String
-  recordingId   String    @id @unique @default(uuid())
+  recordingId   String   @id @unique @default(uuid())
   url           String
   recordingTime DateTime
 }
 
-enum RoomCategory {
+enum RoomType {
   SOCIAL
   PUBLIC
   PRIVATE
 }
 
-enum RoomType {
+enum EventType {
+  PUBLIC
+  PRIVATE
+}
+
+enum eventCategory {
   AUDIO
   VIDEOANDAUDIO
 }
@@ -97,4 +135,15 @@ enum RoomType {
 enum Provider {
   LOCAL
   GOOGLE
+}
+
+enum UserRoleInEventRoom {
+  ADMIN
+  MODERATOR
+  MEMBERS
+}
+
+enum AttendeeRoleInEvent {
+  LISTENER
+  SPEAKERANDLISTENER
 }

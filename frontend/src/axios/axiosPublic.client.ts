@@ -1,4 +1,4 @@
-import { axiosPrivate } from "@/hooks/useAxiosPrivate";
+// import { axiosPrivate } from "@/hooks/useAxiosPrivate";
 import { SendOtpProps, verifyOtpProps } from "@/types";
 import axios, { InternalAxiosRequestConfig } from "axios";
 
@@ -42,8 +42,8 @@ export function sendOtp<T extends object>(data: T) {
 export function verifyOtp<T extends object>(data: T) {
   return publicClient.post("/auth/verify-otp", data);
 }
-export function getInfo() {
-  return axiosPrivate.get("/auth/verify-otp");
-}
+// export function getInfo() {
+//   return axiosPrivate.get("/auth/verify-otp");
+// }
 
 export default publicClient;
