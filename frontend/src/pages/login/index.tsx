@@ -1,6 +1,7 @@
-import SetupLayout from "@/components/layouts/setupLayout";
-import { StepEmail, StepOtp } from "@/components/steps";
-import { StepProps } from "@/types";
+import { StepEmail, StepOtp } from "@/components";
+import SetupLayout from "@/components/Layouts/Setup";
+import { StepProps } from "@/components/Steps/Steps";
+
 import React, { useState } from "react";
 
 export type loginStepsProps = {

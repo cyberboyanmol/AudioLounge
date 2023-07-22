@@ -1,4 +1,4 @@
-import DashboardLayout from "@/components/layouts/dashboardLayout";
+import DashboardLayout from "@/components/Layouts/Dashboard";
 import React from "react";
 
 const AllRooms = () => {

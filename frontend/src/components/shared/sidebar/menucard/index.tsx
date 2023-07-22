@@ -1,12 +1,9 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { MenuCardData } from "../index";
-import { useRouter } from "next/router";
-import Button from "../../button";
 
-export type MenuCardProps = {
-  data: MenuCardData;
-};
+import { useRouter } from "next/router";
+
+import { MenuCardProps } from "./MenuCard";
 
 const MenuCard: React.FC<MenuCardProps> = ({ data }) => {
   const { name, link, icon } = data;

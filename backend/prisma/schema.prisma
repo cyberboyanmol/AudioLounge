@@ -21,11 +21,11 @@ model User {
   updatedAt       DateTime          @updatedAt @map(name: "updated_at")
   createdAt       DateTime          @default(now()) @map(name: "created_at")
   roomcreatedByme Room[]
-  SpeakerInEvent  SpeakerInEvent[]
+  speakerInEvent  SpeakerInEvent[]
   refreshTokens   Refresh[]
-  UserInRoom      UserInRoom[]
+  userInRoom      UserInRoom[]
   recordingSchema recordingSchema[]
-  AttendeeInEvent AttendeeInEvent[]
+  attendeeInEvent AttendeeInEvent[]
   Event           Event[]
 }
 
@@ -40,30 +40,33 @@ model Room {
   updated_at  DateTime     @updatedAt
   creatorId   String?
   creator     User?        @relation(fields: [creatorId], references: [userId])
-  UserInRoom  UserInRoom[]
-  Events      Event[]
+  userInRoom  UserInRoom[]
+  events      Event[]
+  tags        String[]
 }
 
 model Event {
   eventId         String            @id @unique @default(uuid())
-  discussiontopic String
+  topic           String
   eventbanner     String
   description     String?
-  EventRoom       Room?             @relation(fields: [EventroomId], references: [roomId])
-  creator         User?             @relation(fields: [creatorId], references: [userId])
+  eventroomId     String
+  eventRoom       Room              @relation(fields: [eventroomId], references: [roomId])
+  creator         User              @relation(fields: [creatorId], references: [userId])
   creatorId       String            @unique
-  EventroomId     String            @unique
   created_at      DateTime          @default(now())
   updated_at      DateTime          @updatedAt
   start_timing    DateTime
-  endTiming       DateTime?
+  end_timing      DateTime?
+  isEnded         Boolean           @default(false)
+  isStarted       Boolean           @default(false)
   tags            String[]
   eventType       EventType         @default(PUBLIC)
   eventcategory   eventCategory
   attendeesCount  Int               @default(0)
-  SpeakerInEvent  SpeakerInEvent[]
+  speakerInEvent  SpeakerInEvent[]
   recordingSchema recordingSchema[]
-  AttendeeInEvent AttendeeInEvent[]
+  attendeeInEvent AttendeeInEvent[]
 }
 
 model SpeakerInEvent {
@@ -80,21 +83,28 @@ model UserInRoom {
   userId String
   room   Room                @relation(fields: [roomId], references: [roomId])
   roomId String
-  roles  UserRoleInEventRoom
+  roles  UserRoleInRoom
 
   @@id([userId, roomId])
 }
 
 model AttendeeInEvent {
-  socketId String
-  user     User                @relation(fields: [userId], references: [userId])
-  userId   String              @unique()
-  isHost   Boolean
-  event    Event               @relation(fields: [eventId], references: [eventId])
-  eventId  String
-  roles    AttendeeRoleInEvent
+  attendeeId String              @id @unique @default(uuid())
+  socketId   String
+  user       User                @relation(fields: [userId], references: [userId])
+  userId     String              @unique()
+  isHost     Boolean
+  event      Event?              @relation(fields: [eventId], references: [eventId])
+  eventId    String?             @unique()
+  roles      AttendeeRoleInEvent
+  hangout    Hangout?            @relation(fields: [hangoutId], references: [hangoutId])
+  hangoutId  String?
+}
 
-  @@id([userId, eventId])
+model Hangout {
+  hangoutId       String            @id @unique @default(uuid())
+  recordingSchema recordingSchema[]
+  AttendeeInEvent AttendeeInEvent[]
 }
 
 model Refresh {
@@ -107,10 +117,13 @@ model Refresh {
 }
 
 model recordingSchema {
+  name          String
   user          User     @relation(fields: [userId], references: [userId])
   userId        String
-  room          Event    @relation(fields: [roomId], references: [eventId])
-  roomId        String
+  event         Event?   @relation(fields: [eventId], references: [eventId])
+  eventId       String?
+  hangout       Hangout? @relation(fields: [hangoutId], references: [hangoutId])
+  hangoutId     String?
   recordingId   String   @id @unique @default(uuid())
   url           String
   recordingTime DateTime
@@ -129,7 +142,7 @@ enum EventType {
 
 enum eventCategory {
   AUDIO
-  VIDEOANDAUDIO
+  STREAMING
 }
 
 enum Provider {
@@ -137,7 +150,7 @@ enum Provider {
   GOOGLE
 }
 
-enum UserRoleInEventRoom {
+enum UserRoleInRoom {
   ADMIN
   MODERATOR
   MEMBERS

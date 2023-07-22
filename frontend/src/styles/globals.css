@@ -1,6 +1,7 @@
 @tailwind base;
 *::-webkit-scrollbar {
   /* width: 6px; */
+  scroll-behavior: smooth;
   display: none;
 }
 
@@ -16,6 +17,9 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+  -webkit-font-smoothing: subpixel-antialiased;
+  /* user-select: none; */
+  -webkit-tap-highlight-color: transparent;
 }
 
 :root {
@@ -102,4 +106,34 @@ body {
   align-items: center;
   justify-content: center;
   min-height: calc(100vh - 140px);
+}
+
+.image-container {
+  width: 100%;
+}
+
+.image-container > div {
+  position: unset !important;
+}
+
+.image-container .image {
+  object-fit: contain;
+  width: 100% !important;
+  position: relative !important;
+  height: unset !important;
+}
+
+.eventCardImage {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-size: 100% auto;
+}
+
+.eventCardImageBg {
+  position: relative;
+  padding-top: 56.25%;
 }

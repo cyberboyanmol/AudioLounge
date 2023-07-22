@@ -1,10 +1,10 @@
-import { RoomType, roomCardDataProps } from "@/types/room.type";
 import Link from "next/link";
 import React from "react";
 import { HiOutlineLockClosed } from "react-icons/hi";
 import { MdOutlinePublic } from "react-icons/md";
 import { FiUsers } from "react-icons/fi";
 import { useRouter } from "next/router";
+import { RoomType, roomCardDataProps } from "@/types/roomInfoTypes";
 
 const RoomCard: React.FC<roomCardDataProps> = ({
   roomId,
@@ -14,7 +14,6 @@ const RoomCard: React.FC<roomCardDataProps> = ({
 }) => {
   const router = useRouter();
   let icon;
-  console.log(typeof roomType);
   switch (roomType) {
     case RoomType.SOCIAL:
       icon = <MdOutlinePublic />;
@@ -34,7 +33,7 @@ const RoomCard: React.FC<roomCardDataProps> = ({
     roomType === RoomType.SOCIAL
       ? "border-t-teal-600 "
       : roomType === RoomType.PUBLIC
-      ? "border-t-yellow-600 "
+      ? "border-t-yellow-500 "
       : "border-t-purple-700 ";
 
   const isActiveBorder =
@@ -42,7 +41,6 @@ const RoomCard: React.FC<roomCardDataProps> = ({
       ? `shadow-shadow-sidebar  border-t-2  ${borderColor}   bg-opacity-100    `
       : "border-t-2 border-t-transparent";
 
-  console.log(isActiveBorder);
   return (
     <Link
       href={`/dashboard/room/${roomId}`}

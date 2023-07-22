@@ -1,4 +1,5 @@
-import MainLayout from "@/components/layouts/mainlayout";
+
+import MainLayout from "@/components/Layouts/Main";
 import reduxStore, { persistor } from "@/store";
 import "@/styles/globals.css";
 import { AnimatePresence } from "framer-motion";
@@ -12,7 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={reduxStore}>
       <PersistGate loading={<div>loading...</div>} persistor={persistor}>
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           <MainLayout>
             <Component {...pageProps} />
           </MainLayout>

@@ -1,7 +1,7 @@
-import SetupLayout from "@/components/layouts/setupLayout";
-import { StepAvatar, StepName } from "@/components/steps";
-import { StepProps } from "@/types";
 import React, { useState } from "react";
+import SetupLayout from "@/components/Layouts/Setup";
+import { StepAvatar, StepName } from "@/components";
+import { StepProps } from "@/components/Steps/Steps";
 
 export type loginStepsProps = {
   [key: number]: React.FC<StepProps>;

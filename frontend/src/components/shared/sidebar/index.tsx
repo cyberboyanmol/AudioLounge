@@ -4,16 +4,16 @@ import { AiOutlineClose, AiOutlineMenuFold } from "react-icons/ai";
 import { GiMicrophone } from "react-icons/gi";
 import { RiArrowLeftDoubleLine } from "react-icons/ri";
 import { IoHomeOutline } from "react-icons/io5";
-import { RoomType, roomCardDataProps } from "@/types/room.type";
 import {
   MdOutlineDashboard,
   MdOutlineDashboardCustomize,
 } from "react-icons/md";
 import { IoNotificationsOffOutline } from "react-icons/io5";
 import { CiSettings } from "react-icons/ci";
-import MenuCard from "./menucard";
-import MapRenderer from "../mapRenderer";
-import RoomCard from "./roomcard";
+import MenuCard from "./MenuCard";
+import RoomCard from "./Roomcard";
+import type { MenuCardType } from "./MenuCard/MenuCard";
+import { roomData } from "@/utils/data";
 
 export type SidebarProps = {
   open: boolean;
@@ -30,7 +30,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   return (
     <div
-      className={` min-h-screen   w-full    overflow-x-hidden  lg:overflow-auto bg-primaryBgColor border-r border-secondaryBgColor  bg-opacity-90    backdrop-blur-md     `}
+      className={` min-h-screen   w-full    overflow-x-hidden  lg:overflow-auto bg-primaryBgColor border-r border-secondaryBgColor      backdrop-blur-md     `}
     >
       {/* sidebar top */}
       <div className="w-full flex  justify-between items-center  px-5 py-7">
@@ -69,7 +69,9 @@ const Sidebar: React.FC<SidebarProps> = ({
         </div>
         <div className="mt-4">
           <ul className="flex overflow-y-scroll  max-h-[43vh] flex-col gap-2">
-            <MapRenderer data={roomData}>{RoomCard}</MapRenderer>
+            {roomData.map((item, index) => {
+              return <RoomCard {...item} key={index} />;
+            })}
           </ul>
         </div>
       </div>
@@ -79,7 +81,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
 export default Sidebar;
 
-export const menus: MenuCardData[] = [
+export const menus: MenuCardType[] = [
   {
     name: "Home",
     link: "/dashboard",
@@ -99,68 +101,5 @@ export const menus: MenuCardData[] = [
     name: "Settings",
     link: "/dashboard/settings",
     icon: <CiSettings className="text-xl" />,
-  },
-];
-
-export type MenuCardData = {
-  name: string;
-  link: string;
-  icon: React.ReactNode;
-};
-
-const roomData: roomCardDataProps[] = [
-  {
-    roomId: "1",
-    roomname: "Social Lounge",
-    roomType: RoomType.SOCIAL,
-    members: 25,
-  },
-  {
-    roomId: "2",
-    roomname: "Public Discussion",
-    roomType: RoomType.PUBLIC,
-    members: 10,
-  },
-  {
-    roomId: "3",
-    roomname: "Private Meeting",
-    roomType: RoomType.PRIVATE,
-    members: 5,
-  },
-  {
-    roomId: "4",
-    roomname: "Public Discussion",
-    roomType: RoomType.PUBLIC,
-    members: 10,
-  },
-  {
-    roomId: "5",
-    roomname: "Private Meeting",
-    roomType: RoomType.PRIVATE,
-    members: 5,
-  },
-  {
-    roomId: "6",
-    roomname: "Public Discussion",
-    roomType: RoomType.PUBLIC,
-    members: 10,
-  },
-  {
-    roomId: "7",
-    roomname: "Private Meeting",
-    roomType: RoomType.PRIVATE,
-    members: 5,
-  },
-  {
-    roomId: "8",
-    roomname: "Public Discussion",
-    roomType: RoomType.PUBLIC,
-    members: 10,
-  },
-  {
-    roomId: "9",
-    roomname: "Private Meeting",
-    roomType: RoomType.PRIVATE,
-    members: 5,
   },
 ];

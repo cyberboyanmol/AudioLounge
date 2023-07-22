@@ -30,8 +30,3 @@ export type verifySliceInitialProps = {
   email: string;
   hash: string;
 };
-
-export type StepProps = {
-  onNext: () => void;
-  onPrevious: () => void;
-};

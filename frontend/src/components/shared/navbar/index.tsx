@@ -15,11 +15,11 @@ const Navbar: React.FC<NavbarbarProps> = ({
     "https://img.freepik.com/premium-vector/young-smiling-man-avatar-man-with-brown-beard-mustache-hair-wearing-yellow-sweater-sweatshirt-3d-vector-people-character-illustration-cartoon-minimal-style_365941-860.jpg?w=740"
   );
   return (
-    <div className="w-full  sticky top-0 flex items-center border-b border-secondaryBgColor bg-primaryBgColor  bg-opacity-90    backdrop-blur-sm justify-between  px-4 md:px-6 lg:px-9  py-[1.25rem]  ">
+    <div className="w-full  sticky top-0 z-10 flex items-center border-b border-secondaryBgColor bg-primaryBgColor  bg-opacity-90    backdrop-blur-sm justify-between  px-4 md:px-6 lg:px-9  py-[.8rem]  ">
       <div className="flex-2/4 flex relative  items-center self-center   gap-6    ">
         {!open && (
           <AiOutlineMenuUnfold
-            className=" hidden cursor-pointer self-center  lg:flex text-secondaryTextColor text-2xl"
+            className=" hidden cursor-pointer self-center  lg:flex text-secondaryTextColor text-xl"
             onClick={() => setOpen(!open)}
           />
         )}

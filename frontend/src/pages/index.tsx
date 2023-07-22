@@ -1,6 +1,4 @@
-import SetupLayout from "@/components/layouts/setupLayout";
-import Button from "@/components/shared/button";
-import Card from "@/components/shared/card";
+import { Button, Card, SetupLayout } from "@/components";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import React from "react";
