@@ -9,7 +9,7 @@ const Dashboard: React.FC<LayoutTypes.LayoutProps> = ({ children }) => {
     <div className="w-screen h-screen  overflow-y-scroll   flex relative bg-black-800 ">
       <div
         className={`hidden   overflow-x-hidden overflow-y-scroll lg:inline-block  ${
-          open ? "  w-80" : "w-0 opacity-0"
+          open ? "  w-80   xll:w-96" : "w-0 opacity-0"
         }  h-[100%] duration-500`}
       >
         <Sidebar
