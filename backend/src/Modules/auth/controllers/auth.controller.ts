@@ -102,7 +102,7 @@ export class AuthController extends Api {
             res,
             { user: user, accessToken: newAccessToken },
             'login successfully',
-            globalConstants.statusCode.HttpsStatusCodeCreated.code,
+            globalConstants.statusCode.HttpsStatusCodeOk.code,
           );
         } else {
           this.redirect(req, res, 'google');

@@ -1,4 +1,3 @@
-import { CorsOptions } from 'cors';
 
 export interface Config {
   env: string;

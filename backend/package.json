@@ -7,9 +7,10 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development tsx watch ./src/server.ts ",
     "start": "yarn run build && cross-env NODE_ENV=production node -r ./tsconfig-paths.js  ./dist/server.js",
-    "build": "yarn clean  &&  tsc && yarn copy-templates ",
+    "build": "yarn clean  &&  tsc && yarn copy-templates && yarn  copy-keys ",
     "clean": "rimraf dist/",
     "copy-templates": "copyfiles -u 1 src/templates/**/*.ejs  dist/ ",
+    "copy-keys": "copyfiles -u 1 src/keys/**/*.key  dist/ ",
     "format": "prettier --write \"./**/*.{js,ts,json}\"",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",

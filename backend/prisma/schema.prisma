@@ -79,9 +79,9 @@ model SpeakerInEvent {
 }
 
 model UserInRoom {
-  user   User                @relation(fields: [userId], references: [userId])
+  user   User           @relation(fields: [userId], references: [userId])
   userId String
-  room   Room                @relation(fields: [roomId], references: [roomId])
+  room   Room           @relation(fields: [roomId], references: [roomId])
   roomId String
   roles  UserRoleInRoom
 

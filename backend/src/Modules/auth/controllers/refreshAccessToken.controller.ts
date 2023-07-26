@@ -54,7 +54,7 @@ export class RefreshAccessToken extends Api {
         throw new HttpExceptionError(globalConstants.statusCode.UnauthorizedException.code, ' Invalid  user   !');
       }
 
-      logger.info(`${user.userId} ${refreshToken} ${(decoded.userId, decoded.userId)}`);
+      // logger.info(`${user.userId} ${refreshToken} ${(decoded.userId, decoded.userId)}`);
 
       //   delete the refresh token from  refresh token array
       if (user.userId) {
