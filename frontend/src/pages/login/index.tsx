@@ -1,5 +1,6 @@
 import { StepEmail, StepOtp } from "@/components";
 import SetupLayout from "@/components/Layouts/Setup";
+import GuestRoute from "@/components/RouteProtector/GuestRoute";
 import { StepProps } from "@/components/Steps/Steps";
 
 import React, { useState } from "react";
@@ -30,4 +31,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default GuestRoute(Login);

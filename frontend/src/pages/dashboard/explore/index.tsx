@@ -1,8 +1,9 @@
 import DashboardLayout from "@/components/Layouts/Dashboard";
+import ProtectedRoute from "@/components/RouteProtector/Protected";
 import React from "react";
 
-const AllRooms = () => {
-  return <DashboardLayout>room</DashboardLayout>;
+const Explore = () => {
+  return <DashboardLayout>Explore</DashboardLayout>;
 };
 
-export default AllRooms;
+export default ProtectedRoute(Explore);

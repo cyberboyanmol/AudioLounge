@@ -4,6 +4,9 @@ import { SiBackendless } from "react-icons/si";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 import { HiMenuAlt3 } from "react-icons/hi";
 import Image from "next/image";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { authSliceInitialProps } from "@/types";
 
 const Navbar: React.FC<NavbarbarProps> = ({
   open,
@@ -11,8 +14,13 @@ const Navbar: React.FC<NavbarbarProps> = ({
   setOpen,
   mobile,
 }) => {
+  const user = useSelector<RootState, authSliceInitialProps["user"]>(
+    (state) => state.auth.user
+  );
   const [image, setImage] = useState<string>(
-    "https://img.freepik.com/premium-vector/young-smiling-man-avatar-man-with-brown-beard-mustache-hair-wearing-yellow-sweater-sweatshirt-3d-vector-people-character-illustration-cartoon-minimal-style_365941-860.jpg?w=740"
+    user.avatar
+      ? user.avatar
+      : "https://img.freepik.com/premium-vector/young-smiling-man-avatar-man-with-brown-beard-mustache-hair-wearing-yellow-sweater-sweatshirt-3d-vector-people-character-illustration-cartoon-minimal-style_365941-860.jpg?w=740"
   );
   return (
     <div className="w-full  sticky top-0 z-10 flex items-center border-b border-secondaryBgColor bg-primaryBgColor  bg-opacity-90    backdrop-blur-sm justify-between  px-4 md:px-6 lg:px-9  py-[.8rem]  ">

@@ -16,25 +16,21 @@ const StepName: React.FC<StepProps> = ({ onNext, onPrevious }) => {
     (state) => state.auth.user
   );
   function NameHandler() {
-    // if (!fullname) {
-    //   toast.error("Name is required ");
-    //   return;
-    // }
+    if (!fullname) {
+      toast.error("Name is required ");
+      return;
+    }
 
-    // dispatch(
-    //   setUser({
-    //     user: {
-    //       ...user,
-    //       name: fullname,
-    //     },
-    //   })
-    // );
+    dispatch(
+      setUser({
+        user: {
+          ...user,
+          name: fullname,
+        },
+      })
+    );
     onNext();
   }
-  const ButtonStyle = {
-    fontSize: "1.1rem",
-    fontWeight: "bold",
-  };
 
   const onKeyDownHandler: React.KeyboardEventHandler<HTMLInputElement> = (
     event

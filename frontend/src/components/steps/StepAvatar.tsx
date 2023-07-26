@@ -13,6 +13,10 @@ import {
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { StepProps } from "./Steps";
+import { setUser } from "@/store/slices/auth";
+import { loginService } from "@/helper/services/loginService";
+import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 
 const StepAvatar: React.FC<StepProps> = ({ onNext, onPrevious }) => {
   const [image, setImage] = useState<string>(
@@ -24,7 +28,6 @@ const StepAvatar: React.FC<StepProps> = ({ onNext, onPrevious }) => {
 
   const router = useRouter();
   const dispatch = useDispatch();
-  //   const axiosPrivate = useAxiosPrivate();
 
   function captureImage(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -40,27 +43,47 @@ const StepAvatar: React.FC<StepProps> = ({ onNext, onPrevious }) => {
     }
   }
 
-  const ButtonStyle = {
-    fontSize: "1.1rem",
-    fontWeight: "bold",
-  };
-
+  console.log(user);
   const submitHandler = async () => {
+    if (!image) {
+      return toast.info("Image is required");
+    }
     console.log("update user ");
+
+    const { response, errors } = await loginService.ActivateAccount({
+      name: user.name as string,
+      avatar: image,
+      activated: true,
+    });
+
+    if (response) {
+      console.log(response.data);
+      const userData = { ...user, avatar: image, activated: true };
+      dispatch(setUser({ user: userData }));
+      router.replace("/dashboard");
+    }
+
+    if (errors) {
+      const err = errors as AxiosError<any>;
+      console.debug(err);
+      toast.error(err.response?.data);
+    }
+
     // try {
     //   console.log(user);
-    //   const response = await axiosPrivate.put(userEndpoint.updateUser, {
-    //     name: user.name,
-    //     avatar: image,
-    //     activated: true,
-    //   });
+    //   // const response = await axiosPrivate.put(userEndpoint.updateUser, {
+    //   //   name: user.name,
+    //   //   avatar: image,
+    //   //   activated: true,
+    //   // });
+
+    //   const
     //   console.log(response.data);
     //   const userData = { ...user, avatar: image, activated: true };
     //   dispatch(setUser({ user: userData }));
     //   router.replace("/dashboard");
     // } catch (err) {
-    //   console.error(err);
-    // }
+    //   cnsole.error(err);
   };
   return (
     <motion.div
@@ -76,8 +99,8 @@ const StepAvatar: React.FC<StepProps> = ({ onNext, onPrevious }) => {
             src={image}
             alt="user_avatar"
             className={`w-full h-full    object-cover rounded-full `}
-            width={40}
-            height={40}
+            width={200}
+            height={200}
           />
         </div>
         <div>

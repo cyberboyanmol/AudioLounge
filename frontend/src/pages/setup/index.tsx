@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SetupLayout from "@/components/Layouts/Setup";
 import { StepAvatar, StepName } from "@/components";
 import { StepProps } from "@/components/Steps/Steps";
+import SemiProtectedRoute from "@/components/RouteProtector/SemiProtected";
 
 export type loginStepsProps = {
   [key: number]: React.FC<StepProps>;
@@ -29,4 +30,4 @@ const Setup = () => {
   );
 };
 
-export default Setup;
+export default SemiProtectedRoute(Setup);

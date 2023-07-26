@@ -8,6 +8,12 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { StepProps } from "./Steps";
 import { Button, Card, OtpInput } from "../Shared";
+import { setUser } from "@/store/slices/auth";
+import { setAccessToken } from "@/store/slices/accessToken";
+import { setVerify } from "@/store/slices/verify";
+import { toast } from "react-toastify";
+import { loginService } from "@/helper/services/loginService";
+import { AxiosError } from "axios";
 
 const StepOtp: React.FC<StepProps> = ({ onNext, onPrevious }) => {
   const [otp, setOtp] = useState<string>("");
@@ -21,61 +27,68 @@ const StepOtp: React.FC<StepProps> = ({ onNext, onPrevious }) => {
   const onChange = (value: string) => setOtp(value);
 
   const resendOtp = async () => {
-    // const email = verify.email;
-    // if (!email) {
-    //   toast.error("Email is Required");
-    //   return;
-    // }
-    // try {
-    //   const response = await sendOtp<SendOtpProps>({ email });
-    //   const { data, message } = response.data;
-    //   dispatch(
-    //     setVerify({
-    //       email: data.email,
-    //       hash: data.hash,
-    //     })
-    //   );
-    //   toast.success(message);
-    // } catch (err) {
-    //   console.log(err);
-    //   toast.error(err.response.data.message[0].error);
-    // }
+    const email = verify.email;
+    if (!email) {
+      toast.error("Email is Required");
+      return;
+    }
+
+    const { response, errors } = await loginService.login({ email });
+
+    if (response) {
+      const { data, message } = response.data;
+      dispatch(
+        setVerify({
+          email: data.email,
+          hash: data.hash,
+        })
+      );
+      toast.success(message);
+    }
+
+    if (errors) {
+      const err = errors as AxiosError<any>;
+      toast.error(err.response?.data.message[0].error);
+    }
   };
 
   // otp handler
   const otpsubmitHandler = async () => {
-    //     if (!otp) return toast.error("Enter your valid otp ");
-    //     const { response, err } = await userApi.verifyEmail<verifyOtpProps>({
-    //       email: verify.email,
-    //       hash: verify.hash,
-    //       otp: Number(otp),
-    //     });
-    //     if (response) {
-    //       const { data, message } = response.data;
-    //       dispatch(
-    //         setUser({
-    //           user: data.user,
-    //         })
-    //       );
-    //       dispatch(
-    //         setAccessToken({
-    //           accessToken: data.accessToken,
-    //         })
-    //       );
-    //       dispatch(
-    //         setVerify({
-    //           email: "",
-    //           hash: "",
-    //         })
-    //       );
-    //       toast.success(message);
-    //       if (data.user.activated) {
-    //         router.push("/dashboard");
-    //       }
-    //     }
-    //     if (err) {
-    //       toast.error(err.response.data.message);
-    //     }
+    if (!otp) return toast.error("Enter your valid otp ");
+
+    const { response, errors } = await loginService.verifyOtp({
+      email: verify.email,
+      hash: verify.hash,
+      otp: Number(otp),
+    });
+
+    if (response) {
+      const { data, message } = response.data;
+      dispatch(
+        setUser({
+          user: data.user,
+        })
+      );
+      dispatch(
+        setAccessToken({
+          accessToken: data.accessToken,
+        })
+      );
+      dispatch(
+        setVerify({
+          email: "",
+          hash: "",
+        })
+      );
+      toast.success(message);
+      if (data.user.activated) {
+        router.push("/dashboard");
+      }
+    }
+    if (errors) {
+      const err = errors as AxiosError<any>;
+      toast.error(err.response?.data.message);
+    }
   };
   return (
     <motion.div
@@ -88,7 +101,7 @@ const StepOtp: React.FC<StepProps> = ({ onNext, onPrevious }) => {
         <span className={`text-secondaryTextColor  text-sm text-center`}>
           Enter the Otp sent to your{" "}
           <span className=" text-primaryTextColor font-semibold  text-base ">
-            {`verify.email`}{" "}
+            {verify.email}
           </span>
         </span>
         <OtpInput value={otp} onChange={onChange} valueLength={6} />

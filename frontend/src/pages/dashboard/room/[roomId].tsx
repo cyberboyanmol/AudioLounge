@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import BannerSection from "@/components/RoomPage/BannerSection";
 import TabSection from "@/components/RoomPage/TabSection";
+import ProtectedRoute from "@/components/RouteProtector/Protected";
 const Room = () => {
   const router = useRouter();
   const [tab, setTabs] = useState("Account");
@@ -17,4 +18,4 @@ const Room = () => {
   );
 };
 
-export default Room;
+export default ProtectedRoute(Room);

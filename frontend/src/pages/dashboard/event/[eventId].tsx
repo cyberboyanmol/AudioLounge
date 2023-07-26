@@ -10,6 +10,7 @@ import { eventData } from "@/utils/data";
 import BannerSection from "@/components/EventPage/BannerSection";
 import useRouterReady from "@/hooks/useRouterReady";
 import TabSection from "@/components/EventPage/TabSection";
+import ProtectedRoute from "@/components/RouteProtector/Protected";
 const Event = () => {
   const { loading, router } = useRouterReady();
   const [currentEvent, setCurrentEvent] = useState<EventCardProps>();
@@ -32,4 +33,4 @@ const Event = () => {
   );
 };
 
-export default Event;
+export default ProtectedRoute(Event);

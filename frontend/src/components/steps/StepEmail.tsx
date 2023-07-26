@@ -8,6 +8,9 @@ import { SendOtpProps, verifyOtpProps } from "@/types";
 import { motion } from "framer-motion";
 import { StepProps } from "./Steps";
 import { Button, Card, Input } from "../Shared";
+import { loginService } from "@/helper/services/loginService";
+import { HttpRequestGenericError } from "@/helper/HttpRequest/types";
+import { AxiosError } from "axios";
 
 const Email: React.FC<StepProps> = ({ onNext }) => {
   const [email, setEmail] = useState("");
@@ -18,21 +21,25 @@ const Email: React.FC<StepProps> = ({ onNext }) => {
       toast.error("Email is Required");
       return;
     }
-    // const { response, err } = await userApi.login<SendOtpProps>({ email });
-    // if (response) {
-    //   const { data, message } = response.data;
-    //   dispatch(
-    //     setVerify({
-    //       email: data.email,
-    //       hash: data.hash,
-    //     })
-    //   );
-    //   toast.success(message);
-    onNext();
-    // }
-    // if (err) {
-    //   toast.error(err.response.data.message[0].error);
-    // }
+
+    const { response, errors } = await loginService.login({ email });
+
+    if (response) {
+      const { data, message } = response.data;
+      dispatch(
+        setVerify({
+          email: data.email,
+          hash: data.hash,
+        })
+      );
+      toast.success(message);
+      onNext();
+    }
+
+    if (errors) {
+      const err = errors as AxiosError<any>;
+      toast.error(err.response?.data.message[0].error);
+    }
   };
 
   const onKeyDownHandler: React.KeyboardEventHandler<HTMLInputElement> = (

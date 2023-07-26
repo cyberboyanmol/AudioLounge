@@ -1,4 +1,5 @@
 import { Button, Card, SetupLayout } from "@/components";
+import GuestRoute from "@/components/RouteProtector/GuestRoute";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import React from "react";
@@ -56,4 +57,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default GuestRoute(Home);

@@ -7,3 +7,4 @@ export type verifyOtpProps = {
   otp: number;
   hash: string;
 };
+
