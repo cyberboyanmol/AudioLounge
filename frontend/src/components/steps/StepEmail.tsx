@@ -26,14 +26,19 @@ const Email: React.FC<StepProps> = ({ onNext }) => {
 
     if (response) {
       const { data, message } = response.data;
-      dispatch(
-        setVerify({
-          email: data.email,
-          hash: data.hash,
-        })
-      );
-      toast.success(message);
-      onNext();
+
+      if (data) {
+        dispatch(
+          setVerify({
+            email: data.email,
+            hash: data.hash,
+          })
+        );
+        toast.success(message);
+        onNext();
+      } else {
+        toast.info(message);
+      }
     }
 
     if (errors) {

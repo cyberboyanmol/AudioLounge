@@ -6,25 +6,26 @@ import { globalConstants } from '@/lib/constants';
 import { MailService } from '@/lib/mailer.service';
 import { sendMail } from '@/interfaces';
 import { logger } from '@/lib/logger';
+import { UpdateUserDto } from './dtos/updateUser.dto';
 
 export class UserController extends Api {
-  private readonly userServie: UserService;
+  private readonly userService: UserService;
   private readonly mailService: MailService;
   constructor() {
     super();
-    this.userServie = new UserService();
+    this.userService = new UserService();
     this.mailService = new MailService();
   }
 
   public getMyProfileHandler: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      if (!req.user) {
+      if (!req.User) {
         throw new HttpExceptionError(
           globalConstants.statusCode.UnauthorizedException.code,
           ' Unauthorized login first !',
         );
       }
-      const user = await this.userServie.getProfile(req.user.userId);
+      const user = await this.userService.getProfile(req.User.userId);
       this.send(res, user, 'Your profile details');
     } catch (err) {
       next(err);
@@ -35,8 +36,8 @@ export class UserController extends Api {
     try {
       // const { activated } = req.body;
 
-      const { userId } = req.user;
-      const updateUser = await this.userServie.updateUser(userId, req.body);
+      const { userId } = req.User;
+      const updateUser = await this.userService.updateUser<UpdateUserDto>(userId, req.body);
 
       logger.debug(`User ${updateUser.email}`);
 

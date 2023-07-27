@@ -59,8 +59,23 @@ const ActivateAccount = async (data: ActivateAccount) => {
   }
 };
 
+const logout = async () => {
+  const requestOptions: HttpRequestype = {
+    url: ServiceConfig.logoutEndPoint,
+    method: "GET",
+    withCredentials: true,
+  };
+  try {
+    const response = await HttpRequestPrivate(requestOptions);
+    return { response };
+  } catch (errors) {
+    return { errors };
+  }
+};
+
 export const loginService = {
   login,
   ActivateAccount,
   verifyOtp,
+  logout,
 };

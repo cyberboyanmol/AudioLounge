@@ -15,13 +15,18 @@ export class UpdateUserDto implements Prisma.UserUpdateInput {
   @IsEmail()
   readonly email: string;
 
-  @IsNotEmpty()
   @IsOptional()
+  @IsNotEmpty()
   @IsString()
   readonly avatar: string;
 
-  @IsNotEmpty()
   @IsOptional()
+  @IsNotEmpty()
   @IsBoolean()
   readonly activated: boolean;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  readonly googleId: string;
 }

@@ -15,7 +15,7 @@ model User {
   email           String            @unique
   name            String?
   avatar          String?
-  googleId        String?           @map("google_id")
+  googleId        String?           @unique() @map("google_id")
   activated       Boolean           @default(false)
   provider        Provider          @default(LOCAL)
   updatedAt       DateTime          @updatedAt @map(name: "updated_at")

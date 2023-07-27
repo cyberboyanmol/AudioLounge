@@ -25,4 +25,12 @@ export const devConfig: Config = {
   SMTP_SERVICE_EMAIL: String(process.env.SMTP_SERVICE_EMAIL),
   SMTP_SERVICE_PASSWORD: String(process.env.SMTP_SERVICE_PASSWORD),
   OTP_EXPIRE_IN_TIME: Number(process.env.OTP_EXPIRE_IN_TIME),
+
+  // GOOGLE OAUTH2.0 SECRET
+  GOOGLE_CLIENT_SECRET: String(process.env.GOOGLE_CLIENT_SECRET),
+  GOOGLE_CLIENT_ID: String(process.env.GOOGLE_CLIENT_ID),
+  EXPRESS_SESSION_SECRET: String(process.env.EXPRESS_SESSION_SECRET),
+
+  // FRONTEND URL
+  FRONTEND_URL: String(process.env.FRONTEND_URL),
 };
