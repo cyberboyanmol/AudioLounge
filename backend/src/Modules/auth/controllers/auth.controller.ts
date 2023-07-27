@@ -23,6 +23,10 @@ export class AuthController extends Api {
 
   public EmailSignUpHandler: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
+      // const user = await this.AuthService.findUser(req.body.email);
+      // if (user && user.provider === 'GOOGLE') {
+      //   return this.send(res, null, `Use SignIn with Google `);
+      // }
       const response = await this.AuthService.signUpWithEmail(req.body);
 
       this.send(res, response, `Otp sent successfully to your ${req.body.email} `);
@@ -40,7 +44,7 @@ export class AuthController extends Api {
       if (Date.now() > +expireTime) {
         throw new HttpExceptionError(
           globalConstants.statusCode.BadRequestException.code,
-          'Expired OTP (One time password) !',
+          ' OTP  (One time password) Expired !',
         );
       }
 
@@ -62,51 +66,51 @@ export class AuthController extends Api {
         // and generate the access token and refresh token
         this.createNewAccountHandler(req, res, next);
       } else {
-        if (user?.provider === 'LOCAL') {
-          // generate the access token and refresh token and send back to user
+        // if (user?.provider === 'LOCAL') {
+        // generate the access token and refresh token and send back to user
 
-          const cookies = req.cookies;
+        const cookies = req.cookies;
 
-          if (cookies.jwt) {
-            const refreshToken = cookies.jwt;
+        if (cookies.jwt) {
+          const refreshToken = cookies.jwt;
 
-            const foundUser = await this.RefreshAccessTokenService.findUserBasedOnRefreshToken(refreshToken);
+          const foundUser = await this.RefreshAccessTokenService.findUserBasedOnRefreshToken(refreshToken);
 
-            if (foundUser) {
-              await this.RefreshAccessTokenService.removeRefreshToken(user.userId, refreshToken);
-            } else {
-              await this.RefreshAccessTokenService.deleteAllRefreshTokenForUser(user.userId);
-            }
-            res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true });
+          if (foundUser) {
+            await this.RefreshAccessTokenService.removeRefreshToken(foundUser.userId, refreshToken);
+          } else {
+            await this.RefreshAccessTokenService.deleteAllRefreshTokenForUser(user.userId);
           }
-
-          const newRefreshToken = await setRefreshToken({
-            email: user.email,
-            userId: user.userId,
-          });
-          const newAccessToken = await setAccessToken({
-            email: user.email,
-            userId: user.userId,
-          });
-
-          await this.RefreshAccessTokenService.addRefreshToken(user.userId, newRefreshToken);
-
-          res.cookie('jwt', newRefreshToken, {
-            httpOnly: true,
-            secure: true,
-            sameSite: 'none',
-            maxAge: getConfig().JWT_REFRESH_TOKEN_COOKIE_EXPIRATION,
-          });
-
-          this.send(
-            res,
-            { user: user, accessToken: newAccessToken },
-            'login successfully',
-            globalConstants.statusCode.HttpsStatusCodeOk.code,
-          );
-        } else {
-          this.redirect(req, res, 'google');
+          res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true });
         }
+
+        const newRefreshToken = await setRefreshToken({
+          email: user.email,
+          userId: user.userId,
+        });
+        const newAccessToken = await setAccessToken({
+          email: user.email,
+          userId: user.userId,
+        });
+
+        await this.RefreshAccessTokenService.addRefreshToken(user.userId, newRefreshToken);
+
+        res.cookie('jwt', newRefreshToken, {
+          httpOnly: true,
+          secure: true,
+          sameSite: 'none',
+          maxAge: getConfig().JWT_REFRESH_TOKEN_COOKIE_EXPIRATION,
+        });
+
+        this.send(
+          res,
+          { user: user, accessToken: newAccessToken },
+          'login successfully',
+          globalConstants.statusCode.HttpsStatusCodeOk.code,
+        );
+        // } else {
+        //   this.send(res, null, 'login with google');
+        // }
       }
     } catch (err) {
       next(err);

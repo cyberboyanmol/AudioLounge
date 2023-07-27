@@ -6,6 +6,7 @@ import { logger } from '@/lib/logger';
 import { VerifyOtpDto } from '../dtos/verifyotp.dto';
 import { OtpService } from '@/utils';
 import { getConfig } from '@/config';
+import type { User } from '@prisma/client';
 
 export class AuthService {
   private readonly prisma = prisma;
@@ -57,13 +58,14 @@ export class AuthService {
     return newUser;
   }
 
-  public async findUser(email: string) {
+  public async findUser(email: string): Promise<User> {
+    logger.info(`${email} from findUser `);
     const user = await this.prisma.user.findUnique({
       where: {
         email: email,
       },
     });
 
-    return user;
+    return user as User;
   }
 }

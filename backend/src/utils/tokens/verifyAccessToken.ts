@@ -42,7 +42,7 @@ export async function verifyAccessToken(req: Request, res: Response<CustomRespon
 
       const decoded = jwt.verify(token, publickey, options) as DecodedToken;
 
-      req.user = { userId: decoded.userId };
+      req.User = { userId: decoded.userId };
 
       next();
     } catch (err) {

@@ -1,4 +1,3 @@
-
 import MainLayout from "@/components/Layouts/Main";
 import reduxStore, { persistor } from "@/store";
 import "@/styles/globals.css";
@@ -13,7 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={reduxStore}>
       <PersistGate loading={<div>loading...</div>} persistor={persistor}>
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="sync">
           <MainLayout>
             <Component {...pageProps} />
           </MainLayout>

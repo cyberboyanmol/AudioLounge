@@ -7,6 +7,9 @@ import { VerifyOtpDto } from './dtos/verifyotp.dto';
 import { GoogleController } from './controllers/google.controller';
 import { RefreshAccessToken } from './controllers/refreshAccessToken.controller';
 import { isAuthenticated } from '@/middlewares/auth.middleware';
+import passport from 'passport';
+import session from 'express-session';
+import { getConfig } from '@/config';
 
 export class AuthRoute implements Route {
   public readonly path = '/auth';
@@ -27,6 +30,28 @@ export class AuthRoute implements Route {
 
     this.router.get(`${this.path}/logout`, isAuthenticated, this.authController.logoutHandler);
 
-    this.router.get(`${this.path}/google`, this.googleController.signInWithgoogle);
+    this.router.use(
+      session({
+        secret: getConfig().EXPRESS_SESSION_SECRET,
+        resave: false,
+        saveUninitialized: true,
+        cookie: { secure: true },
+      }),
+    );
+
+    this.router.get(
+      `${this.path}/google`,
+      passport.authenticate('google', {
+        scope: ['email', 'profile'],
+      }),
+    );
+
+    this.router.get(
+      `${this.path}/google/callback`,
+      passport.authenticate('google', {
+        failureRedirect: 'http://localhost:3000/',
+      }),
+      this.googleController.signInWithgoogle,
+    );
   }
 }

@@ -1,4 +1,3 @@
-
 export interface Config {
   env: string;
   server: {
@@ -19,4 +18,8 @@ export interface Config {
   SMTP_SERVICE_EMAIL: string;
   SMTP_SERVICE_PASSWORD: string;
   OTP_EXPIRE_IN_TIME: number;
+  GOOGLE_CLIENT_ID: string;
+  GOOGLE_CLIENT_SECRET: string;
+  EXPRESS_SESSION_SECRET: string;
+  FRONTEND_URL: string;
 }

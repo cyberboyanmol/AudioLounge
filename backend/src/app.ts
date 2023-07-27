@@ -10,6 +10,8 @@ import { globalConstants } from '@/lib/constants';
 import { logger } from '@/lib/logger';
 import { errorMiddleware } from '@/middlewares/error.middleware';
 import http, { Server } from 'http';
+import passport from 'passport';
+import '@/utils/passport/googleStrategy';
 export class App {
   public app: express.Application;
   public port: number;
@@ -33,15 +35,15 @@ export class App {
   private initializeMiddleware() {
     this.app.use(morgan(this.config.log.format));
     this.app.use(helmet());
-
+    this.app.use(passport.initialize());
     this.app.use(
       cors({
         origin: getConfig().allowedOrigins,
         credentials: true,
       }),
     );
-    this.app.use(express.urlencoded({ extended: true }));
-    this.app.use(express.json({ limit: '20mb' }));
+    this.app.use(express.json({ limit: '10mb' }));
+    this.app.use(express.urlencoded({ limit: '10mb', extended: true }));
     this.app.use(cookieParser());
   }
 
