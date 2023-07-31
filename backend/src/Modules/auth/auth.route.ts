@@ -35,7 +35,7 @@ export class AuthRoute implements Route {
         secret: getConfig().EXPRESS_SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
-        cookie: { secure: true },
+        cookie: { secure: true, maxAge: 1000 * 60 },
       }),
     );
 

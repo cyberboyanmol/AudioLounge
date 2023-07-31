@@ -1,5 +1,5 @@
 import prisma from '@/lib/prisma-client';
-
+import { Prisma } from '@prisma/client';
 export class UserService {
   private readonly prisma = prisma;
 
@@ -20,7 +20,7 @@ export class UserService {
     return { user };
   }
 
-  public async updateUser<T extends object>(userId: string, updateData: T) {
+  public async updateUser<T extends Prisma.UserUpdateInput>(userId: string, updateData: T) {
     console.log(updateData);
 
     const updateUser = await this.prisma.user.update({
